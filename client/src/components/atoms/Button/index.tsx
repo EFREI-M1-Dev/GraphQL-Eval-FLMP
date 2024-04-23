@@ -16,7 +16,7 @@ const Button = ({ children, color = 'blue' }: ButtonProps) => {
   return (
     <>
       {darkMode ? 'dark' : 'white'}
-      <button style={styles} onClick={toogleMode}>
+      <button className={styles.button} onClick={toogleMode}>
         {children}
       </button>
     </>
