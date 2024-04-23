@@ -1,7 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Roboto:wght@400;700&display=swap');
+
 @import './reset.scss';
 @import 'variables';
-@import 'fonts';
+@import 'pages';
 
-html {
+html,
+body {
+  font-size: 16px;
   font-family: $roboto, sans-serif;
+  font-weight: 400;
 }
