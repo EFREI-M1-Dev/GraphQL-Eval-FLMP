@@ -13,8 +13,27 @@ const AuthLayout = () => {
           <Button>Support</Button>
         </div>
         <div className="auth__forms">
-          <form>
-          </form>
+          <div className="auth__forms__box">
+            <div className="auth__forms__content">
+              <form>
+                <div className="auth__forms__content__input">
+                  <label htmlFor="email">Email</label>
+                  <input type="email" id="email" name="email" placeholder="utilisateur@gmail.com"/>
+                </div>
+                <div className="auth__forms__content__input">
+                  <label htmlFor="password">Mot de passe</label>
+                  <input type="password" id="password" name="password" placeholder="Mot de passe"/>
+                </div>
+                <div className="auth__forms__infos">
+                  <p>
+                    Vous n'avez pas encore de compte ?&nbsp;
+                    <a href="/register">Inscrivez-vous</a>
+                  </p>
+                </div>
+                <Button>Se connecter</Button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
   )
