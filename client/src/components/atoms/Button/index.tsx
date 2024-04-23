@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styles from './button.module.scss'
 
 type ButtonProps = {
   children: string
@@ -15,7 +16,7 @@ const Button = ({ children, color = 'blue' }: ButtonProps) => {
   return (
     <>
       {darkMode ? 'dark' : 'white'}
-      <button style={{ backgroundColor: color }} onClick={toogleMode}>
+      <button style={styles} onClick={toogleMode}>
         {children}
       </button>
     </>
