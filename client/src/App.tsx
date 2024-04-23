@@ -1,12 +1,8 @@
-import Button from './components/atoms/Button'
+import { RouterProvider } from 'react-router-dom'
+import router from './router'
 
 function App() {
-  return (
-    <>
-      <span>TEST</span>
-      <Button>test</Button>
-    </>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
