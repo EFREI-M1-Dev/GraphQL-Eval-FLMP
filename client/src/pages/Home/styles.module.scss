@@ -1,18 +1,27 @@
+@import '../../assets/styles/variables';
+
 .home {
-  background: #ffc017;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background: $yellow;
   min-height: 463px;
   border-bottom: 1px solid #000;
   padding: 0 64px;
   display: flex;
   align-items: center;
+  position: relative;
 
   > div {
     h1 {
       font-size: 106px;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.01em;
       line-height: 95px;
       font-weight: 400;
       padding-bottom: 35px;
+      font-family: $lora;
     }
 
     p {
@@ -23,4 +32,15 @@
       margin-bottom: 50px;
     }
   }
+
+  .animationHeader {
+    position: absolute;
+    right: 0;
+  }
+}
+
+.article_list {
+  display: flex;
+  justify-content: center;
+  padding: 56px 64px;
 }

@@ -1,3 +1,7 @@
 @import './reset.scss';
 @import 'variables';
 @import 'fonts';
+
+html {
+  font-family: $roboto, sans-serif;
+}
