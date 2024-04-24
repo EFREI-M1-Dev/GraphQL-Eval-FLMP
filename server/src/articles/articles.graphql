@@ -1,15 +1,18 @@
 type Article {
-  # Example field (placeholder)
-  exampleField: Int
+  id: Int!
+  title: String
+  content: String
 }
 
 input CreateArticleInput {
-  # Example field (placeholder)
-  exampleField: Int
+  title: String!
+  content: String!
 }
 
 input UpdateArticleInput {
   id: Int!
+  title: String!
+  content: String!
 }
 
 type Query {

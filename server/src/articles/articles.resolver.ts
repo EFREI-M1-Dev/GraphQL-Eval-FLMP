@@ -24,7 +24,10 @@ export class ArticlesResolver {
 
   @Mutation('updateArticle')
   update(@Args('updateArticleInput') updateArticleInput: UpdateArticleInput) {
-    return this.articlesService.update(updateArticleInput.id, updateArticleInput);
+    return this.articlesService.update(
+      updateArticleInput.id,
+      updateArticleInput,
+    );
   }
 
   @Mutation('removeArticle')

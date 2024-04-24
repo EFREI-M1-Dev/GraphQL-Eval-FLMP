@@ -9,15 +9,20 @@
 /* eslint-disable */
 
 export interface CreateArticleInput {
-    exampleField?: Nullable<number>;
+    title: string;
+    content: string;
 }
 
 export interface UpdateArticleInput {
     id: number;
+    title: string;
+    content: string;
 }
 
 export interface Article {
-    exampleField?: Nullable<number>;
+    id: number;
+    title?: Nullable<string>;
+    content?: Nullable<string>;
 }
 
 export interface IQuery {
