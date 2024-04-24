@@ -37,7 +37,7 @@ export class ArticlesService {
   }
 
   findOne(id: number) {
-    return this.articles[id];
+    return this.articles.find((article) => article.id === id);
   }
 
   update(id: number, updateArticleInput: UpdateArticleInput) {
@@ -65,6 +65,7 @@ export class ArticlesService {
     if (index === -1) {
       throw new Error(`Article with ID ${id} not found`);
     }
+
     this.articles.splice(index, 1);
 
     return `Article with ID ${id} has been removed`;
