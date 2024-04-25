@@ -19,6 +19,16 @@ export interface UpdateArticleInput {
     content: string;
 }
 
+export interface LoginUserInput {
+    username: string;
+    password: string;
+}
+
+export interface CreateUserInput {
+    username?: Nullable<string>;
+    password?: Nullable<string>;
+}
+
 export interface Article {
     id: number;
     title?: Nullable<string>;
@@ -28,12 +38,27 @@ export interface Article {
 export interface IQuery {
     articles(): Nullable<Article>[] | Promise<Nullable<Article>[]>;
     article(id: number): Nullable<Article> | Promise<Nullable<Article>>;
+    users(): Nullable<User>[] | Promise<Nullable<User>[]>;
+    user(username: string): Nullable<User> | Promise<Nullable<User>>;
 }
 
 export interface IMutation {
     createArticle(createArticleInput: CreateArticleInput): Article | Promise<Article>;
     updateArticle(updateArticleInput: UpdateArticleInput): Article | Promise<Article>;
     removeArticle(id: number): Nullable<Article> | Promise<Nullable<Article>>;
+    login(loginUserInput: LoginUserInput): LoginResponse | Promise<LoginResponse>;
+    signup(loginUserInput: LoginUserInput): User | Promise<User>;
+    createUser(createUserInput: CreateUserInput): User | Promise<User>;
+}
+
+export interface LoginResponse {
+    user: User;
+    token: string;
+}
+
+export interface User {
+    id: number;
+    username?: Nullable<string>;
 }
 
 type Nullable<T> = T | null;
