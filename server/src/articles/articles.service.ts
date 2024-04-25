@@ -1,73 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class ArticlesService {
-  // Mock
-  private articles = [
-    {
-      id: 1,
-      title: 'title1',
-      content: 'text1',
-    },
-    {
-      id: 2,
-      title: 'title2',
-      content: 'text2',
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
   create(createArticleInput: CreateArticleInput) {
-    const { title, content } = createArticleInput;
-
-    const newArticle = {
-      id: this.articles.length + 1,
-      title,
-      content,
-    };
-
-    this.articles.push(newArticle);
-
-    return newArticle;
+    return this.prisma.article.create({
+      data: { ...createArticleInput },
+    });
   }
 
   findAll() {
-    return this.articles;
+    return this.prisma.article.findMany();
   }
 
   findOne(id: number) {
-    return this.articles.find((article) => article.id === id);
+    return this.prisma.article.findUnique({ where: { id } });
   }
 
   update(id: number, updateArticleInput: UpdateArticleInput) {
-    const { title, content } = updateArticleInput;
-
-    const articleToUpdate = this.articles.find((article) => article.id === id);
-
-    if (!articleToUpdate) {
-      throw new Error(`Article with ID ${id} not found`);
-    }
-
-    if (title !== undefined) {
-      articleToUpdate.title = title;
-    }
-    if (content !== undefined) {
-      articleToUpdate.content = content;
-    }
-
-    return articleToUpdate;
+    return this.prisma.article.update({
+      data: { ...updateArticleInput },
+      where: { id },
+    });
   }
 
   remove(id: number) {
-    const index = this.articles.findIndex((article) => article.id === id);
-
-    if (index === -1) {
-      throw new Error(`Article with ID ${id} not found`);
-    }
-
-    this.articles.splice(index, 1);
-
-    return `Article with ID ${id} has been removed`;
+    return this.prisma.article.delete({ where: { id } });
   }
 }
