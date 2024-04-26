@@ -3,7 +3,8 @@ import { ArticlesService } from './articles.service';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
 import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { GraphQLContext } from 'src/interfaces/graphql-context.interface';
 
 @Resolver('Article')
 export class ArticlesResolver {
@@ -13,7 +14,7 @@ export class ArticlesResolver {
   @UseGuards(JwtAuthGuard)
   create(
     @Args('createArticleInput') createArticleInput: CreateArticleInput,
-    @Context() context: any,
+    @Context() context: GraphQLContext,
   ) {
     return this.articlesService.create(
       createArticleInput,
