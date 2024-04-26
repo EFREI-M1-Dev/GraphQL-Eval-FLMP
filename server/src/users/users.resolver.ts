@@ -1,4 +1,4 @@
-import { Resolver, Query, Args, Context } from '@nestjs/graphql';
+import { Resolver, Query, Args } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -9,9 +9,7 @@ export class UsersResolver {
 
   @Query('users')
   @UseGuards(JwtAuthGuard)
-  findAll(@Context() context: any) {
-    console.log(context.req.user);
-
+  findAll() {
     return this.usersService.findAll();
   }
 

@@ -1,15 +1,24 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
 import { ArticlesService } from './articles.service';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Resolver('Article')
 export class ArticlesResolver {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Mutation('createArticle')
-  create(@Args('createArticleInput') createArticleInput: CreateArticleInput) {
-    return this.articlesService.create(createArticleInput);
+  @UseGuards(JwtAuthGuard)
+  create(
+    @Args('createArticleInput') createArticleInput: CreateArticleInput,
+    @Context() context: any,
+  ) {
+    return this.articlesService.create(
+      createArticleInput,
+      context.req.user.username,
+    );
   }
 
   @Query('articles')

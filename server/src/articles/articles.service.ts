@@ -7,9 +7,15 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class ArticlesService {
   constructor(private prisma: PrismaService) {}
 
-  create(createArticleInput: CreateArticleInput) {
+  create(createArticleInput: CreateArticleInput, username: string) {
     return this.prisma.article.create({
-      data: { ...createArticleInput },
+      data: {
+        title: createArticleInput.title,
+        content: createArticleInput.content,
+        author: {
+          connect: { username },
+        },
+      },
     });
   }
 
