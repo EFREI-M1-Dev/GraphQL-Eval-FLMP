@@ -1,15 +1,25 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Context } from '@nestjs/graphql';
 import { ArticlesService } from './articles.service';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { GraphQLContext } from 'src/interfaces/graphql-context.interface';
 
 @Resolver('Article')
 export class ArticlesResolver {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Mutation('createArticle')
-  create(@Args('createArticleInput') createArticleInput: CreateArticleInput) {
-    return this.articlesService.create(createArticleInput);
+  @UseGuards(JwtAuthGuard)
+  create(
+    @Args('createArticleInput') createArticleInput: CreateArticleInput,
+    @Context() context: GraphQLContext,
+  ) {
+    return this.articlesService.create(
+      createArticleInput,
+      context.req.user.username,
+    );
   }
 
   @Query('articles')
@@ -24,7 +34,10 @@ export class ArticlesResolver {
 
   @Mutation('updateArticle')
   update(@Args('updateArticleInput') updateArticleInput: UpdateArticleInput) {
-    return this.articlesService.update(updateArticleInput.id, updateArticleInput);
+    return this.articlesService.update(
+      updateArticleInput.id,
+      updateArticleInput,
+    );
   }
 
   @Mutation('removeArticle')
