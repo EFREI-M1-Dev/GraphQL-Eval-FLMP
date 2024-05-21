@@ -9,12 +9,14 @@
   background: $yellow;
   min-height: 463px;
   border-bottom: 1px solid #000;
-  padding: 0 64px;
+  padding: 150px 64px;
   display: flex;
   align-items: center;
   position: relative;
 
   > div {
+    padding-left: 64px;
+
     h1 {
       font-size: 106px;
       letter-spacing: -0.01em;

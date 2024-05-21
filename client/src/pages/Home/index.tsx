@@ -8,6 +8,7 @@ import HeaderAnimationLetter from './HeaderAnimationLetter'
 
 /* graphql */
 import { useGetArticlesQuery } from '../../generated/graphql'
+import Navbar from '../../components/organisms/Navbar'
 
 const Home = () => {
   const { loading, data } = useGetArticlesQuery({})
@@ -18,6 +19,7 @@ const Home = () => {
 
   return (
     <div className={styles.home}>
+      <Navbar />
       <div className={styles.header}>
         <div>
           <h1>Stay curious.</h1>
