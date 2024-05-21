@@ -2,6 +2,7 @@ type User {
   id: Int!
   username: String
   articles: [Article!]
+  likes: [Like!]
 }
 
 input CreateUserInput {

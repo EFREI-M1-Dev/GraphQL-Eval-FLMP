@@ -24,6 +24,15 @@ export interface LoginUserInput {
     password: string;
 }
 
+export interface CreateLikeInput {
+    userId: number;
+    articleId: number;
+}
+
+export interface UpdateLikeInput {
+    id: number;
+}
+
 export interface CreateUserInput {
     username?: Nullable<string>;
     password?: Nullable<string>;
@@ -34,11 +43,14 @@ export interface Article {
     title?: Nullable<string>;
     content?: Nullable<string>;
     author?: Nullable<User>;
+    likes?: Nullable<Like[]>;
 }
 
 export interface IQuery {
     articles(): Nullable<Article>[] | Promise<Nullable<Article>[]>;
     article(id: number): Nullable<Article> | Promise<Nullable<Article>>;
+    likes(): Nullable<Like>[] | Promise<Nullable<Like>[]>;
+    like(id: number): Nullable<Like> | Promise<Nullable<Like>>;
     users(): Nullable<User>[] | Promise<Nullable<User>[]>;
     user(username: string): Nullable<User> | Promise<Nullable<User>>;
 }
@@ -49,6 +61,9 @@ export interface IMutation {
     removeArticle(id: number): Nullable<Article> | Promise<Nullable<Article>>;
     login(loginUserInput: LoginUserInput): LoginResponse | Promise<LoginResponse>;
     signup(loginUserInput: LoginUserInput): User | Promise<User>;
+    createLike(createLikeInput: CreateLikeInput): Like | Promise<Like>;
+    updateLike(updateLikeInput: UpdateLikeInput): Like | Promise<Like>;
+    removeLike(id: number): Nullable<Like> | Promise<Nullable<Like>>;
     createUser(createUserInput: CreateUserInput): User | Promise<User>;
 }
 
@@ -57,10 +72,17 @@ export interface LoginResponse {
     token: string;
 }
 
+export interface Like {
+    id: number;
+    user?: Nullable<User>;
+    article?: Nullable<Article>;
+}
+
 export interface User {
     id: number;
     username?: Nullable<string>;
     articles?: Nullable<Article[]>;
+    likes?: Nullable<Like[]>;
 }
 
 type Nullable<T> = T | null;

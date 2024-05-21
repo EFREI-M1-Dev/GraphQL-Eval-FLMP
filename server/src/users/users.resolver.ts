@@ -13,6 +13,11 @@ export class UsersResolver {
     return this.usersService.findOne(user.username).articles();
   }
 
+  @ResolveField()
+  async likes(@Root() user: User) {
+    return this.usersService.findOne(user.username).likes();
+  }
+
   @Query('users')
   @UseGuards(JwtAuthGuard)
   findAll() {
