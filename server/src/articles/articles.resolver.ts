@@ -36,6 +36,11 @@ export class ArticlesResolver {
     return this.articlesService.findOne(articles.id).author();
   }
 
+  @ResolveField()
+  likes(@Root() articles: Article) {
+    return this.articlesService.findOne(articles.id).likes();
+  }
+
   @Query('articles')
   findAll() {
     return this.articlesService.findAll();
