@@ -1,11 +1,17 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Root, ResolveField } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { User } from '@prisma/client';
 
 @Resolver('User')
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
+
+  @ResolveField()
+  async articles(@Root() user: User) {
+    return this.usersService.findOne(user.username).articles();
+  }
 
   @Query('users')
   @UseGuards(JwtAuthGuard)

@@ -33,6 +33,7 @@ export interface Article {
     id: number;
     title?: Nullable<string>;
     content?: Nullable<string>;
+    author?: Nullable<User>;
 }
 
 export interface IQuery {
@@ -59,6 +60,7 @@ export interface LoginResponse {
 export interface User {
     id: number;
     username?: Nullable<string>;
+    articles?: Nullable<Article[]>;
 }
 
 type Nullable<T> = T | null;
