@@ -1,0 +1,35 @@
+@import '../../../assets/styles/variables';
+
+.navbar {
+  height: 76px;
+  display: flex;
+  justify-content: center;
+  background: $yellow;
+  border-bottom: 1px solid #000;
+  width: 100%;
+
+  > div {
+    width: 100%;
+    max-width: 1192px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    > ul {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      font-size: 14px;
+    }
+  }
+}
+
+.logo {
+  width: 160px;
+}
+
+.button {
+  padding: 8px 16px;
+  width: auto;
+  font-size: 14px;
+}
