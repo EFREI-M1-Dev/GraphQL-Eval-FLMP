@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Home from '../pages/Home'
-import AuthLayout from "../pages/auth/AuthLayout.tsx";
+import AuthLayout from '../pages/auth/AuthLayout.tsx'
 
 const router = createBrowserRouter([
   {
@@ -14,7 +14,7 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <AuthLayout />,
-  }
+  },
 ])
 
 export default router
