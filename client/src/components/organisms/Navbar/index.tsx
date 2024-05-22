@@ -1,10 +1,13 @@
 import styles from './styles.module.scss'
+import { Link, useNavigate } from 'react-router-dom'
 
 /* components */
 import Button from '../../atoms/Button'
 import MediumLogo from '../../../assets/logo/medium'
 
 const Navbar = () => {
+  const navigate = useNavigate()
+
   return (
     <nav className={styles.navbar}>
       <div>
@@ -20,9 +23,14 @@ const Navbar = () => {
             <a>Write</a>
           </li>
           <li>
-            <a>Sign in</a>
+            <Link to="/login">Sign in</Link>
           </li>
-          <Button className={styles.button}>Get started</Button>
+          <Button
+            onClick={() => navigate('/register')}
+            className={styles.button}
+          >
+            Get started
+          </Button>
         </ul>
       </div>
     </nav>

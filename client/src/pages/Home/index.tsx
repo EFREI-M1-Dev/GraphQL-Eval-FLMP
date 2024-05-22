@@ -17,6 +17,19 @@ const Home = () => {
     console.log(data)
   }
 
+  const mokeArticle = {
+    title: "Louis aime-t-il les gâteaux à l'orange",
+    desc: 'Louis aime seulement les gâteaux au chocolat, cela lui rappel le goût de son enfance.',
+    date: '12/05/2024',
+    likeQuantity: 38,
+    commentQuantity: 3,
+    duration: '00:04:00',
+    author: {
+      label: 'Francis Huster',
+      img: 'https://miro.medium.com/v2/resize:fit:1358/1*8ahtIIqHbHUNoA-gyk4ALQ.jpeg',
+    },
+  }
+
   return (
     <div className={styles.home}>
       <Navbar />
@@ -33,9 +46,20 @@ const Home = () => {
 
       <div className={styles.article_list}>
         <GridArticleCards>
-          <ArticleCard />
-          <ArticleCard />
-          <ArticleCard />
+          {'blab'.split('').map((element, key) => {
+            return (
+              <ArticleCard
+                id={key}
+                title={mokeArticle.title}
+                desc={mokeArticle.desc}
+                date={mokeArticle.date}
+                duration={mokeArticle.duration}
+                likeQuantity={mokeArticle.likeQuantity}
+                commentQuantity={mokeArticle.commentQuantity}
+                author={mokeArticle.author}
+              />
+            )
+          })}
         </GridArticleCards>
       </div>
     </div>

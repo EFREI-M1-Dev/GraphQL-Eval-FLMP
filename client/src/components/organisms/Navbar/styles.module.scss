@@ -20,6 +20,13 @@
       align-items: center;
       gap: 25px;
       font-size: 14px;
+
+      > li {
+        a {
+          text-decoration: none;
+          color: $black;
+        }
+      }
     }
   }
 }
