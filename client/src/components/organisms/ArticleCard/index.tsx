@@ -27,7 +27,7 @@ const ArticleCard = ({
   return (
     <div onClick={() => navigate(`article/${id}`)} className={styles.card}>
       <div className={styles.article_image}>
-        <img alt="article image" src={article.author?.img} />
+        <img alt="article image" src={article.author?.img || 'https://miro.medium.com/v2/resize:fit:1358/1*8ahtIIqHbHUNoA-gyk4ALQ.jpeg'} />
       </div>
       <div className={styles.author}>
         <img
