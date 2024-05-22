@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma/prisma.service';
 import { LikesModule } from './likes/likes.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
@@ -18,6 +19,10 @@ import { LikesModule } from './likes/likes.module';
       definitions: {
         path: join(process.cwd(), 'src/graphql.ts'),
       },
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static'),
+      serveRoot: '/static',
     }),
     ArticlesModule,
     UsersModule,
