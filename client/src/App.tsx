@@ -9,6 +9,7 @@ import { RouterProvider } from 'react-router-dom'
 
 /* router */
 import router from './router'
+import {useAppSelector} from "./hooks/reduxHooks.tsx";
 
 function App() {
   const httpLink = createHttpLink({
@@ -38,7 +39,7 @@ function App() {
     })
   }
 
-  const token = localStorage.getItem('token')
+  const token = useAppSelector((state) => state.userConnected.token);
 
   const client = token
     ? createAuthenticatedClient(token)

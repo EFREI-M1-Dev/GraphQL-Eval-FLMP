@@ -10,6 +10,7 @@ import HeaderAnimationLetter from './HeaderAnimationLetter'
 import { useGetArticlesQuery } from '../../generated/graphql'
 import Navbar from '../../components/organisms/Navbar'
 import {useEffect, useState} from "react";
+import {gql, useQuery} from "@apollo/client";
 
 type Article = {
   title?: string
@@ -24,6 +25,14 @@ type Article = {
   }
 }
 
+const QUERY = gql(`
+query{
+  users{
+    username
+  }
+}
+`);
+
 const Home = () => {
   const { loading, data } = useGetArticlesQuery({})
   const [articles, setArticles] = useState<Article[]>([]);
@@ -34,9 +43,15 @@ const Home = () => {
     }
   }, [loading, data])
 
+
+  const users = useQuery(QUERY);
+  console.log(users);
+
+
   return (
     <div className={styles.home}>
       <Navbar />
+
       <div className={styles.header}>
         <div>
           <h1>Stay curious.</h1>
