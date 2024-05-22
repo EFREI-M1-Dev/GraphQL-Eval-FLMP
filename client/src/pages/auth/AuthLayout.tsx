@@ -1,11 +1,11 @@
 import Button from "../../components/atoms/Button";
 import styles from './styles.module.scss'
 
-interface AuthLayoutProps {
-  children: React.ReactNode
+type AuthLayoutProps = {
+  children: string
 }
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({children}) => {
+const AuthLayout= ({ children }: AuthLayoutProps) => {
   return (
       <div className={styles.auth}>
         <div className={styles.auth__infos}>
