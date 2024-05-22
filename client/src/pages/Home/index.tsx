@@ -9,26 +9,30 @@ import HeaderAnimationLetter from './HeaderAnimationLetter'
 /* graphql */
 import { useGetArticlesQuery } from '../../generated/graphql'
 import Navbar from '../../components/organisms/Navbar'
+import {useEffect, useState} from "react";
+
+type Article = {
+  title?: string
+  desc?: string
+  date?: string
+  duration?: string
+  likeQuantity?: number
+  commentQuantity?: number,
+  author?: {
+    label?: string
+    img?: string
+  }
+}
 
 const Home = () => {
   const { loading, data } = useGetArticlesQuery({})
+  const [articles, setArticles] = useState<Article[]>([]);
 
-  if (!loading) {
-    console.log(data)
-  }
-
-  const mokeArticle = {
-    title: "Louis aime-t-il les gâteaux à l'orange",
-    desc: 'Louis aime seulement les gâteaux au chocolat, cela lui rappel le goût de son enfance.',
-    date: '12/05/2024',
-    likeQuantity: 38,
-    commentQuantity: 3,
-    duration: '00:04:00',
-    author: {
-      label: 'Francis Huster',
-      img: 'https://miro.medium.com/v2/resize:fit:1358/1*8ahtIIqHbHUNoA-gyk4ALQ.jpeg',
-    },
-  }
+  useEffect(() => {
+    if (!loading){
+      setArticles(data?.articles as Article[]);
+    }
+  }, [loading, data])
 
   return (
     <div className={styles.home}>
@@ -46,17 +50,11 @@ const Home = () => {
 
       <div className={styles.article_list}>
         <GridArticleCards>
-          {'blab'.split('').map((element, key) => {
+          {articles.map((article: Article, key: number) => {
             return (
               <ArticleCard
                 id={key}
-                title={mokeArticle.title}
-                desc={mokeArticle.desc}
-                date={mokeArticle.date}
-                duration={mokeArticle.duration}
-                likeQuantity={mokeArticle.likeQuantity}
-                commentQuantity={mokeArticle.commentQuantity}
-                author={mokeArticle.author}
+                article={article}
               />
             )
           })}
