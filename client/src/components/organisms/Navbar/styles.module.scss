@@ -22,6 +22,8 @@
       font-size: 14px;
 
       > li {
+        cursor: pointer;
+
         a {
           text-decoration: none;
           color: $black;

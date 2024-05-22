@@ -5,8 +5,17 @@ import { Link, useNavigate } from 'react-router-dom'
 import Button from '../../atoms/Button'
 import MediumLogo from '../../../assets/logo/medium'
 
+/* hooks */
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks'
+
+/* features */
+import { logoutLoggedUser } from '../../../features/userConnectedSlice'
+
 const Navbar = () => {
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const loggedUser = useAppSelector((state) => state.userConnected.token)
 
   return (
     <nav className={styles.navbar}>
@@ -22,15 +31,24 @@ const Navbar = () => {
           <li>
             <a>Write</a>
           </li>
-          <li>
-            <Link to="/login">Sign in</Link>
-          </li>
-          <Button
-            onClick={() => navigate('/register')}
-            className={styles.button}
-          >
-            Get started
-          </Button>
+          {!loggedUser && (
+            <li>
+              <Link to="/login">Sign in</Link>
+            </li>
+          )}
+          {loggedUser && (
+            <li id="logout">
+              <span onClick={() => dispatch(logoutLoggedUser())}>Logout</span>
+            </li>
+          )}
+          {!loggedUser && (
+            <Button
+              onClick={() => navigate('/register')}
+              className={styles.button}
+            >
+              Get started
+            </Button>
+          )}
         </ul>
       </div>
     </nav>

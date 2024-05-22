@@ -9,8 +9,8 @@ import HeaderAnimationLetter from './HeaderAnimationLetter'
 /* graphql */
 import { useGetArticlesQuery } from '../../generated/graphql'
 import Navbar from '../../components/organisms/Navbar'
-import {useEffect, useState} from "react";
-import {gql, useQuery} from "@apollo/client";
+import { useEffect, useState } from 'react'
+import { gql, useQuery } from '@apollo/client'
 
 type Article = {
   title?: string
@@ -18,7 +18,7 @@ type Article = {
   date?: string
   duration?: string
   likeQuantity?: number
-  commentQuantity?: number,
+  commentQuantity?: number
   author?: {
     label?: string
     img?: string
@@ -31,22 +31,20 @@ query{
     username
   }
 }
-`);
+`)
 
 const Home = () => {
   const { loading, data } = useGetArticlesQuery({})
-  const [articles, setArticles] = useState<Article[]>([]);
+  const [articles, setArticles] = useState<Article[]>([])
 
   useEffect(() => {
-    if (!loading){
-      setArticles(data?.articles as Article[]);
+    if (data) {
+      setArticles(data?.articles as Article[])
     }
   }, [loading, data])
 
-
-  const users = useQuery(QUERY);
-  console.log(users);
-
+  const users = useQuery(QUERY)
+  console.log(users)
 
   return (
     <div className={styles.home}>
@@ -66,12 +64,7 @@ const Home = () => {
       <div className={styles.article_list}>
         <GridArticleCards>
           {articles.map((article: Article, key: number) => {
-            return (
-              <ArticleCard
-                id={key}
-                article={article}
-              />
-            )
+            return <ArticleCard id={key} article={article} />
           })}
         </GridArticleCards>
       </div>

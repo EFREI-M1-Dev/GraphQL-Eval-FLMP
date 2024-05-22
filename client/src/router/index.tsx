@@ -1,8 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom'
+
+/* components */
 import Home from '../pages/Home'
 import Register from '../pages/auth/Register.tsx'
 import Login from '../pages/auth/Login.tsx'
 import Article from '../pages/article/index.tsx'
+import RedirectIfNotLogged from '../components/others/RedirectIfNotLogged.tsx'
 
 const router = createBrowserRouter([
   {
@@ -21,11 +24,19 @@ const router = createBrowserRouter([
   /* auth */
   {
     path: '/login',
-    element: <Login />,
+    element: (
+      <RedirectIfNotLogged>
+        <Login />
+      </RedirectIfNotLogged>
+    ),
   },
   {
     path: '/register',
-    element: <Register />,
+    element: (
+      <RedirectIfNotLogged>
+        <Register />
+      </RedirectIfNotLogged>
+    ),
   },
 ])
 
