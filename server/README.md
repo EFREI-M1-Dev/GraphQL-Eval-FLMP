@@ -31,4 +31,4 @@ $ npm run start:prod
 `alice:password`
 `bob:password`
 `charlie:password`
-`dave:password`
+`diana:password`
