@@ -14,6 +14,8 @@ import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GraphQLContext } from 'src/interfaces/graphql-context.interface';
 import { Article } from '@prisma/client';
+import { ArticleSortInput } from './dto/sort-article.input';
+import { ArticleFilterInput } from './dto/filter-article-input';
 
 @Resolver('Article')
 export class ArticlesResolver {
@@ -42,8 +44,11 @@ export class ArticlesResolver {
   }
 
   @Query('articles')
-  findAll() {
-    return this.articlesService.findAll();
+  findAll(
+    @Args('filter', { nullable: true }) filter?: ArticleFilterInput,
+    @Args('sort', { nullable: true }) sort?: ArticleSortInput,
+  ) {
+    return this.articlesService.findAll(filter, sort);
   }
 
   @Query('article')

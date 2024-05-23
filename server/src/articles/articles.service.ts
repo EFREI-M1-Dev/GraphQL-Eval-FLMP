@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { ArticleSortInput } from './dto/sort-article.input';
+import { ArticleFilterInput } from './dto/filter-article-input';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ArticlesService {
@@ -20,8 +23,47 @@ export class ArticlesService {
     });
   }
 
-  findAll() {
-    return this.prisma.article.findMany();
+  findAll(filter?: ArticleFilterInput, sort?: ArticleSortInput) {
+    const where: Prisma.ArticleWhereInput = {};
+
+    if (filter?.title) {
+      where.title = {
+        contains: filter.title,
+      };
+    }
+
+    if (filter?.authorId) {
+      where.authorId = filter.authorId;
+    }
+
+    if (filter?.createdAfter) {
+      where.createdAt = {
+        gte: filter.createdAfter,
+      };
+    }
+
+    if (filter?.createdBefore) {
+      where.createdAt = {
+        lte: filter.createdBefore,
+      };
+    }
+
+    const orderBy: Prisma.ArticleOrderByWithRelationInput[] = [];
+    if (sort?.likes) {
+      orderBy.push({ likes: { _count: sort.likes } });
+    }
+    if (sort?.createdAt) {
+      orderBy.push({ createdAt: sort.createdAt });
+    }
+
+    return this.prisma.article.findMany({
+      where,
+      orderBy,
+      include: {
+        likes: true,
+        author: true,
+      },
+    });
   }
 
   findOne(id: number) {

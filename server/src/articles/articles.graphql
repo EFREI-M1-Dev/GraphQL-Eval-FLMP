@@ -10,6 +10,23 @@ type Article {
 
 scalar Timestamp
 
+enum SortOrder {
+  asc
+  desc
+}
+
+input ArticleSortInput {
+  likes: SortOrder
+  createdAt: SortOrder
+}
+
+input ArticleFilterInput {
+  title: String
+  authorId: Int
+  createdAfter: Timestamp
+  createdBefore: Timestamp
+}
+
 input CreateArticleInput {
   title: String!
   content: String!
@@ -22,7 +39,7 @@ input UpdateArticleInput {
 }
 
 type Query {
-  articles: [Article]!
+  articles(filter: ArticleFilterInput, sort: ArticleSortInput): [Article]!
   article(id: Int!): Article
 }
 
