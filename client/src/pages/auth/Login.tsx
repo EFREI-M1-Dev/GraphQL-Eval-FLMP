@@ -3,7 +3,7 @@ import {Link, useNavigate} from "react-router-dom";
 import AuthLayout from "./AuthLayout.tsx";
 import styles from "./styles.module.scss";
 import {gql, useMutation} from "@apollo/client";
-import {FormEvent, useRef} from "react";
+import {FormEvent, useRef, useState} from "react";
 import {useAppDispatch} from "../../hooks/reduxHooks.tsx";
 import {setLoggedUser} from "../../features/userConnectedSlice.ts";
 
@@ -21,6 +21,7 @@ const LOGIN_MUTATION = gql`
 const Login = () => {
 
   const navigate = useNavigate();
+  const [msgError, setMsgError] = useState('');
   const [login] = useMutation(LOGIN_MUTATION);
   const usernameRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -30,12 +31,22 @@ const Login = () => {
     event.preventDefault();
     const username = usernameRef.current?.value;
     const password = passwordRef.current?.value;
-    if (username && password) {
-      const { data } = await login({ variables: { input: { username, password } } });
+    try {
+      if (!username || !password) {
+        setMsgError('Veuillez renseigner tous les champs');
+        return;
+      }
+
+      const {data} = await login({variables: {input: {username, password}}});
       if (data?.login.token) {
         dispatch(setLoggedUser(data.login.token));
         navigate('/');
+      } else {
+        setMsgError('Le compte n\'existe pas');
       }
+    } catch (e) {
+      console.error(e);
+      setMsgError('Une erreur est survenue');
     }
   }
 
@@ -53,6 +64,7 @@ const Login = () => {
                 <label htmlFor="password">Mot de passe</label>
                 <input ref={passwordRef} type="password" id="password" name="password" placeholder="Mot de passe"/>
               </div>
+              {msgError && <p className={styles.auth__forms__error}>{msgError}</p>}
               <div className={styles.auth__forms__infos}>
                 <p>
                   Vous n'avez pas encore de compte ?&nbsp;
