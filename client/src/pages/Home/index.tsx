@@ -7,31 +7,9 @@ import GridArticleCards from '../../components/templates/GridArticleCards'
 import HeaderAnimationLetter from './HeaderAnimationLetter'
 
 /* graphql */
-import { useGetArticlesQuery } from '../../generated/graphql'
+import { Article, useGetArticlesQuery } from '../../generated/graphql'
 import Navbar from '../../components/organisms/Navbar'
 import { useEffect, useState } from 'react'
-import { gql, useQuery } from '@apollo/client'
-
-type Article = {
-  title?: string
-  desc?: string
-  date?: string
-  duration?: string
-  likeQuantity?: number
-  commentQuantity?: number
-  author?: {
-    label?: string
-    img?: string
-  }
-}
-
-const QUERY = gql(`
-query{
-  users{
-    username
-  }
-}
-`)
 
 const Home = () => {
   const { loading, data } = useGetArticlesQuery({})
@@ -42,9 +20,6 @@ const Home = () => {
       setArticles(data?.articles as Article[])
     }
   }, [loading, data])
-
-  const users = useQuery(QUERY)
-  console.log(users)
 
   return (
     <div className={styles.home}>
@@ -63,8 +38,17 @@ const Home = () => {
 
       <div className={styles.article_list}>
         <GridArticleCards>
-          {articles.map((article: Article, key: number) => {
-            return <ArticleCard id={key} article={article} />
+          {articles.map((article: Article) => {
+            return (
+              <ArticleCard
+                id={article?.id}
+                title={article.title}
+                author={article.author}
+                content={article.content}
+                createdAt={article.createdAt}
+                image={article.image}
+              />
+            )
           })}
         </GridArticleCards>
       </div>

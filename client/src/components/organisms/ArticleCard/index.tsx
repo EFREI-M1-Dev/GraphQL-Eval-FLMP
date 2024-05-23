@@ -1,55 +1,46 @@
 import { useNavigate } from 'react-router-dom'
 import Icon from '../../atoms/Icon'
 import styles from './styles.module.scss'
-
-type ArticleCardProps = {
-  id?: number
-  article: {
-    title?: string
-    desc?: string
-    date?: string
-    duration?: string
-    likeQuantity?: number
-    commentQuantity?: number
-    author?: {
-      label?: string
-      img?: string
-    }
-  }
-}
+import { Article } from '../../../generated/graphql'
+import moment from 'moment'
 
 const ArticleCard = ({
-    id,
-    article
-}: ArticleCardProps) => {
+  id,
+  title,
+  author,
+  content,
+  createdAt,
+  image,
+}: Article) => {
   const navigate = useNavigate()
 
   return (
-    <div onClick={() => navigate(`article/${id}`)} className={styles.card}>
+    <div
+      id={id.toString()}
+      onClick={() => navigate(`article/${id}`)}
+      className={styles.card}
+    >
       <div className={styles.article_image}>
-        <img alt="article image" src={article.author?.img || 'https://miro.medium.com/v2/resize:fit:1358/1*8ahtIIqHbHUNoA-gyk4ALQ.jpeg'} />
+        <img alt="article image" src={image || ''} />
       </div>
       <div className={styles.author}>
-        <img
-          alt="picture profil"
-          src="https://miro.medium.com/v2/resize:fill:40:40/1*mosLZsYBO_ih_9Mv-SBUEQ.png"
-        />
-        <a href="">{article.author?.label}</a>
+        <img alt="picture profil" src={author?.avatar || ''} />
+        <a href="">{author?.username}</a>
       </div>
-      <h3>{article.title}</h3>
-      <p>{article.desc}</p>
+      <h3>{title}</h3>
+      <p>{content}</p>
       <div className={styles.infos}>
-        <span>{article.duration}</span>•<span>{article.date}</span>
+        <span>3 min</span>•<span>{moment(createdAt).format('DD/MM/YY')}</span>
       </div>
       <div className={styles.actions}>
         <ul>
           <li>
             <Icon name="clap" color="#6B6B6B" />
-            <span>{article.likeQuantity}</span>
+            <span>29</span>
           </li>
           <li>
             <Icon name="chat_bubble" color="#6B6B6B" />
-            <span>{article.commentQuantity}</span>
+            <span>4</span>
           </li>
         </ul>
         <Icon name="save" color="#6B6B6B" />

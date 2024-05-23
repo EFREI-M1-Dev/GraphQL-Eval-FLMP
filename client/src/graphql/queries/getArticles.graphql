@@ -1,6 +1,13 @@
 query GetArticles {
   articles {
+    id
     title
     content
+    image
+    createdAt
+    author {
+      username
+      avatar
+    }
   }
 }

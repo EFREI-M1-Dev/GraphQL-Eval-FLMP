@@ -4,7 +4,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import Home from '../pages/Home'
 import Register from '../pages/auth/Register.tsx'
 import Login from '../pages/auth/Login.tsx'
-import Article from '../pages/article/index.tsx'
+import Article from '../pages/Article/index.tsx'
 import NewStory from '../pages/NewStory/index.tsx'
 
 import RedirectIfNotLogged from '../components/others/RedirectIfNotLogged.tsx'
