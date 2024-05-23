@@ -38,10 +38,10 @@ const NewStory = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await postArticle({
-        variables: { input: { title: 'test', content: 'test' } },
+      const { data } = await postArticle({
+        variables: { input: formValues },
       })
-      console.log(response)
+      console.log(data)
     } catch (err) {
       console.error('Error posting article:', err)
     }

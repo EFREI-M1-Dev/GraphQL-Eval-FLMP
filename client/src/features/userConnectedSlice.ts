@@ -22,7 +22,9 @@ const userSlice = createSlice({
   initialState: initialState,
   reducers: {
     setLoggedUser: (state, action) => {
-      state.token = action.payload
+      state.token = action.payload.token
+      state.img = action.payload.user.avatar
+      state.firstName = action.payload.user.username
     },
     setUpdateUser: (state, action) => {
       state.mail = action.payload.data.userUpdated.email

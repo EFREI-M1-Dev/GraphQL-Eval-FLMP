@@ -21,9 +21,9 @@ const Navbar = ({ publishAction, canBeSend }: NavbarProps) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const loggedUser = useAppSelector((state) => state.userConnected.token)
+  const loggedUser = useAppSelector((state) => state.userConnected)
 
-  return loggedUser ? (
+  return loggedUser.token ? (
     <nav className={styles.navbar_logged}>
       <div>
         <div>
@@ -54,7 +54,7 @@ const Navbar = ({ publishAction, canBeSend }: NavbarProps) => {
           </Link>
           <div
             style={{
-              backgroundImage: `url(https://media.licdn.com/dms/image/C4E03AQGJX3PEbWiTNg/profile-displayphoto-shrink_400_400/0/1613564877277?e=1721865600&v=beta&t=LE_SmnQBJzfjvmH95Kz5OukTa1FWpxKLFnsRU9Pj1tc)`,
+              backgroundImage: `url(${loggedUser.img})`,
             }}
             className={styles.avatar}
           ></div>
