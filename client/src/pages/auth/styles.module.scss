@@ -52,7 +52,15 @@
       margin: 2rem;
     }
 
-    &__title{
+    &__error {
+      color: red;
+      font-family: $roboto;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    &__title {
       font-family: $roboto;
       font-size: 2rem;
       text-align: center;
@@ -67,6 +75,7 @@
         flex-direction: column;
 
         margin-bottom: 1rem;
+
         label {
           text-transform: uppercase;
           color: $black;
@@ -102,12 +111,12 @@
       }
     }
 
-    &__infos{
+    &__infos {
       font-family: $roboto;
       font-size: 1rem;
       margin-bottom: 2rem;
 
-      a{
+      a {
         color: $yellow;
       }
     }
