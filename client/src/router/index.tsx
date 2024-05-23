@@ -5,7 +5,10 @@ import Home from '../pages/Home'
 import Register from '../pages/auth/Register.tsx'
 import Login from '../pages/auth/Login.tsx'
 import Article from '../pages/article/index.tsx'
+import NewStory from '../pages/NewStory/index.tsx'
+
 import RedirectIfNotLogged from '../components/others/RedirectIfNotLogged.tsx'
+import RedirectIfLogged from '../components/others/RedirectIfLogged.tsx'
 
 const router = createBrowserRouter([
   {
@@ -19,6 +22,14 @@ const router = createBrowserRouter([
   {
     path: '/about',
     element: <div>About</div>,
+  },
+  {
+    path: '/new-story',
+    element: (
+      <RedirectIfLogged>
+        <NewStory />
+      </RedirectIfLogged>
+    ),
   },
 
   /* auth */

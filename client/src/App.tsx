@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   ApolloClient,
   ApolloProvider,
@@ -9,7 +10,7 @@ import { RouterProvider } from 'react-router-dom'
 
 /* router */
 import router from './router'
-import {useAppSelector} from "./hooks/reduxHooks.tsx";
+import { useAppSelector } from './hooks/reduxHooks.tsx'
 
 function App() {
   const httpLink = createHttpLink({
@@ -39,11 +40,16 @@ function App() {
     })
   }
 
-  const token = useAppSelector((state) => state.userConnected.token);
+  const token = useAppSelector((state) => state.userConnected.token)
+  const [client, setClient] = useState(createUnauthenticatedClient())
 
-  const client = token
-    ? createAuthenticatedClient(token)
-    : createUnauthenticatedClient()
+  useEffect(() => {
+    if (token) {
+      setClient(createAuthenticatedClient(token))
+    } else {
+      setClient(createUnauthenticatedClient())
+    }
+  }, [token])
 
   return (
     <ApolloProvider client={client}>
