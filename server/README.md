@@ -25,4 +25,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Users
+> username:password
 
+`alice:password`
+`bob:password`
+`charlie:password`
+`dave:password`
