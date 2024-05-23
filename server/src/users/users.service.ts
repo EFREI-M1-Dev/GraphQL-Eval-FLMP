@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserInput } from './dto/create-user.input';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { getRandomInt } from 'src/utils/random';
 
 @Injectable()
 export class UsersService {
@@ -8,7 +9,10 @@ export class UsersService {
 
   create(createUserInput: CreateUserInput) {
     return this.prisma.user.create({
-      data: { ...createUserInput },
+      data: {
+        ...createUserInput,
+        avatar: `http://localhost:3000/static/avatar-${getRandomInt(1, 4)}.png`,
+      },
     });
   }
 

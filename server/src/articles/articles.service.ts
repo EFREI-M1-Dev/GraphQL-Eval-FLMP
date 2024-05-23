@@ -15,6 +15,7 @@ export class ArticlesService {
         author: {
           connect: { username },
         },
+        image: 'http://localhost:3000/static/cover-1.jpg',
       },
     });
   }

@@ -11,6 +11,7 @@ model User {
   id        Int       @default(autoincrement()) @id
   username  String    @unique
   password  String
+  avatar    String
   articles  Article[]
   likes     Like[]
 }
@@ -19,6 +20,8 @@ model Article {
   id        Int       @default(autoincrement()) @id
   title     String
   content   String
+  image     String
+  createdAt DateTime  @default(now())
   author    User      @relation(fields: [authorId], references: [id])
   authorId  Int
   likes     Like[]

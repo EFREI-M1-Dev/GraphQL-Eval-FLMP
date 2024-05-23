@@ -2,9 +2,13 @@ type Article {
   id: Int!
   title: String
   content: String
+  image: String
+  createdAt: Timestamp
   author: User
   likes: [Like!]
 }
+
+scalar Timestamp
 
 input CreateArticleInput {
   title: String!
