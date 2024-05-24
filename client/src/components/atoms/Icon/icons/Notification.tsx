@@ -1,6 +1,8 @@
-import { SVGProps } from '../../../../types/SVGProps'
+type NotificationProps = React.SVGProps<SVGSVGElement> & {
+  color?: string
+}
 
-const Notification = ({ color = '#000', ...props }: SVGProps) => {
+const Notification = ({ color = '#000', ...props }: NotificationProps) => {
   return (
     <svg
       width="100%"

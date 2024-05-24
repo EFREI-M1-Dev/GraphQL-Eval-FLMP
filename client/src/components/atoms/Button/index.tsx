@@ -2,10 +2,12 @@ import classNames from 'classnames'
 import styles from './button.module.scss'
 
 type ButtonProps = {
-  children: string
+  children: string | React.ReactElement[]
   size?: 'sm' | 'md'
   color?: 'black' | 'green'
   active?: boolean
+  outline?: boolean
+  widthAuto?: boolean
   onClick?: () => void
   className?: string
 }
@@ -15,6 +17,8 @@ const Button = ({
   size = 'md',
   color = 'black',
   active = false,
+  outline = false,
+  widthAuto = false,
   className,
   onClick,
 }: ButtonProps) => {
@@ -25,6 +29,8 @@ const Button = ({
         [styles[`size-${size}`]]: size,
         [styles[`color-${color}`]]: color,
         [styles.active]: active,
+        [styles.outline]: outline,
+        [styles['width-auto']]: widthAuto,
       })}
     >
       {children}

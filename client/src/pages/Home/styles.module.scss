@@ -41,8 +41,19 @@
   }
 }
 
+.filter_bar {
+  display: flex;
+  justify-content: center;
+
+  > div {
+    width: 100%;
+    max-width: 1340px;
+    padding: 20px 0;
+  }
+}
+
 .article_list {
   display: flex;
   justify-content: center;
-  padding: 56px 64px;
+  padding: 0px 64px;
 }

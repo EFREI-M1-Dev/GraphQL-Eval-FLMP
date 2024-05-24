@@ -31,4 +31,16 @@
       background: #0f730c;
     }
   }
+
+  &.outline {
+    display: flex;
+    gap: 4px;
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+  }
+
+  &.width-auto {
+    width: auto;
+  }
 }

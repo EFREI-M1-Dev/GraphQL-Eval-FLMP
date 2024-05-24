@@ -1,6 +1,8 @@
-import { SVGProps } from '../../../../types/SVGProps'
+type WriteProps = React.SVGProps<SVGSVGElement> & {
+  color?: string
+}
 
-const Write = ({ color = '#000', ...props }: SVGProps) => {
+const Write = ({ color = '#000', ...props }: WriteProps) => {
   return (
     <svg
       width="100%"

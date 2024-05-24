@@ -1,6 +1,8 @@
-import { SVGProps } from '../../../../types/SVGProps'
+type ClapProps = React.SVGProps<SVGSVGElement> & {
+  color?: string
+}
 
-const Clap = ({ color = '#000', ...props }: SVGProps) => {
+const Clap = ({ color = '#000', ...props }: ClapProps) => {
   return (
     <svg
       width="100%"

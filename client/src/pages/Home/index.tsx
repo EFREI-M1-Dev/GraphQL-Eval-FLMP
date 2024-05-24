@@ -10,6 +10,7 @@ import HeaderAnimationLetter from './HeaderAnimationLetter'
 import { Article, useGetArticlesQuery } from '../../generated/graphql'
 import Navbar from '../../components/organisms/Navbar'
 import { useEffect, useState } from 'react'
+import Icon from '../../components/atoms/Icon'
 
 const Home = () => {
   const { loading, data, refetch } = useGetArticlesQuery({})
@@ -38,6 +39,15 @@ const Home = () => {
           <Button>Start reading</Button>
         </div>
         <HeaderAnimationLetter className={styles.animationHeader} />
+      </div>
+
+      <div className={styles.filter_bar}>
+        <div>
+          <Button widthAuto outline>
+            <Icon color="#000" name="filter" />
+            <span>Filter</span>
+          </Button>
+        </div>
       </div>
 
       <div className={styles.article_list}>

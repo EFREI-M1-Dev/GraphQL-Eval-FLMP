@@ -11,6 +11,7 @@ const Icon = ({ name, color }: IconProps) => {
 
   if (!IconComponent) {
     console.error(`L'icône "${name}" n'existe pas.`)
+    return null // Assurez-vous de retourner null en cas d'erreur pour éviter les erreurs de rendu
   }
 
   return <IconComponent className={styles.icon} color={color} />

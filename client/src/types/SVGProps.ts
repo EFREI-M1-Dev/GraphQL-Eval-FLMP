@@ -1,3 +1,4 @@
 export type SVGProps = {
-  color: string
+  name: string
+  color?: string
 }

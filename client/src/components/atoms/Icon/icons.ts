@@ -1,5 +1,3 @@
-import { SVGProps } from '../../../types/SVGProps'
-
 /* icons */
 import ChatBubble from './icons/ChatBubble'
 import Clap from './icons/Clap'
@@ -10,7 +8,7 @@ import Write from './icons/Write'
 import Filter from './icons/Filter'
 
 type IconMap = {
-  [key: string]: React.ComponentType<SVGProps>
+  [key: string]: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 const icons: IconMap = {

@@ -1,6 +1,8 @@
-import { SVGProps } from '../../../../types/SVGProps'
+type SaveProps = React.SVGProps<SVGSVGElement> & {
+  color?: string
+}
 
-const Save = ({ color = '#000', ...props }: SVGProps) => {
+const Save = ({ color = '#000', ...props }: SaveProps) => {
   return (
     <svg
       width="100%"

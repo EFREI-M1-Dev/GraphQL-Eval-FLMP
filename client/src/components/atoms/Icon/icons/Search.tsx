@@ -1,6 +1,8 @@
-import { SVGProps } from '../../../../types/SVGProps'
+type SearchProps = React.SVGProps<SVGSVGElement> & {
+  color?: string
+}
 
-const Search = ({ color = '#000', ...props }: SVGProps) => {
+const Search = ({ color = '#000', ...props }: SearchProps) => {
   return (
     <svg
       width="100%"
