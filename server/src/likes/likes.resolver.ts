@@ -5,11 +5,13 @@ import {
   Args,
   ResolveField,
   Root,
+  Context,
 } from '@nestjs/graphql';
 import { LikesService } from './likes.service';
-import { CreateLikeInput } from './dto/create-like.input';
-import { UpdateLikeInput } from './dto/update-like.input';
 import { Like } from '@prisma/client';
+import { GraphQLContext } from 'src/interfaces/graphql-context.interface';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Resolver('Like')
 export class LikesResolver {
@@ -26,8 +28,12 @@ export class LikesResolver {
   }
 
   @Mutation('createLike')
-  create(@Args('createLikeInput') createLikeInput: CreateLikeInput) {
-    return this.likesService.create(createLikeInput);
+  @UseGuards(JwtAuthGuard)
+  create(
+    @Args('articleId') articleId: number,
+    @Context() context: GraphQLContext,
+  ) {
+    return this.likesService.create(articleId, context.req.user.userId);
   }
 
   @Query('likes')
@@ -40,13 +46,12 @@ export class LikesResolver {
     return this.likesService.findOne(id);
   }
 
-  @Mutation('updateLike')
-  update(@Args('updateLikeInput') updateLikeInput: UpdateLikeInput) {
-    return this.likesService.update(updateLikeInput.id, updateLikeInput);
-  }
-
   @Mutation('removeLike')
-  remove(@Args('id') id: number) {
-    return this.likesService.remove(id);
+  @UseGuards(JwtAuthGuard)
+  remove(
+    @Args('articleId') articleId: number,
+    @Context() context: GraphQLContext,
+  ) {
+    return this.likesService.remove(articleId, context.req.user.userId);
   }
 }

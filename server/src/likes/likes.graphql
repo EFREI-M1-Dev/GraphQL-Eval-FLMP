@@ -4,22 +4,12 @@ type Like {
   article: Article
 }
 
-input CreateLikeInput {
-  userId: Int!
-  articleId: Int!
-}
-
-input UpdateLikeInput {
-  id: Int!
-}
-
 type Query {
   likes: [Like]!
   like(id: Int!): Like
 }
 
 type Mutation {
-  createLike(createLikeInput: CreateLikeInput!): Like!
-  updateLike(updateLikeInput: UpdateLikeInput!): Like!
-  removeLike(id: Int!): Like
+  createLike(articleId: Int!): Like!
+  removeLike(articleId: Int!): Like
 }
