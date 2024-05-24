@@ -1,32 +1,22 @@
 import { ChangeEvent, useEffect, useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.scss'
 
 /* components */
 import Navbar from '../../components/organisms/Navbar'
-import {useNavigate} from "react-router-dom";
 
 /* graphql */
-/* import { CreateArticleInput } from '../../generated/graphql' */
-
-const CREATE_ARTICLE = gql`
-  mutation CreateArticle($input: CreateArticleInput!) {
-    createArticle(createArticleInput: $input) {
-      id
-      title
-      content
-    }
-  }
-`
+import { CreateArticleInput } from '../../generated/graphql'
+import { useCreateArticleMutation } from '../../generated/graphql'
 
 const NewStory = () => {
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<CreateArticleInput>({
     title: '',
     content: '',
   })
-  const navigate = useNavigate();
 
-  const [postArticle, { data, loading, error }] = useMutation(CREATE_ARTICLE)
+  const navigate = useNavigate()
+  const [createArticle, { data, loading, error }] = useCreateArticleMutation()
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,11 +34,12 @@ const NewStory = () => {
         // TODO: message error ?
         return
       }
-      const { data } = await postArticle({
+      const { data } = await createArticle({
         variables: { input: formValues },
       })
-      console.log(data);
-      navigate(`/article/${data.createArticle.id}`);
+      if (data?.createArticle) {
+        navigate(`/article/${data.createArticle.id}`)
+      }
     } catch (err) {
       console.error('Error posting article:', err)
     }
