@@ -17,9 +17,9 @@ const [article, setArticle] = useState<Article>()
     if (data) {
       setArticle(data?.article as Article)
     }
+    refetch().then(r => console.log(r));
   }, [loading, data])
 
-  refetch().then(r => console.log(r));
 
   return (
     <div>
@@ -29,7 +29,7 @@ const [article, setArticle] = useState<Article>()
         <div className={styles.width}>
 
           <div className={styles.head}>
-            <img src={article?.image || 'http://localhost:3000/static/article-1.png'} alt={article?.title}/>
+            <img src={article?.image || 'http://localhost:3000/static/article-1.png'} alt={article?.title || ''}/>
 
             <h1>
               {article?.title}
