@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import styles from './HeaderAnimationLetter.module.scss'
 
 type HeaderAnimationLetterProps = {
@@ -24,24 +24,28 @@ const HeaderAnimationLetter = ({ className }: HeaderAnimationLetterProps) => {
 
   const [grid, setGrid] = useState<GridRow[]>(generateInitialGrid())
 
-  const generateLetter = () => {
+  const clearLetter = useCallback((row: number, col: number) => {
+    setGrid((prevGrid) => {
+      const newGrid = prevGrid.map((r) => [...r])
+      newGrid[row][col] = false
+      return newGrid
+    })
+  }, [])
+
+  const generateLetter = useCallback(() => {
     const randomRow = Math.floor(Math.random() * 16)
     const randomCol = Math.floor(Math.random() * 22)
-    const newGrid = grid.map((row) => [...row])
-    newGrid[randomRow][randomCol] = true
-    setGrid(newGrid)
+    setGrid((prevGrid) => {
+      const newGrid = prevGrid.map((row) => [...row])
+      newGrid[randomRow][randomCol] = true
+      return newGrid
+    })
 
     const timeout = Math.random() * 9000 + 1000
     setTimeout(() => {
       clearLetter(randomRow, randomCol)
     }, timeout)
-  }
-
-  const clearLetter = (row: number, col: number) => {
-    const newGrid = grid.map((r) => [...r])
-    newGrid[row][col] = false
-    setGrid(newGrid)
-  }
+  }, [clearLetter])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -49,7 +53,7 @@ const HeaderAnimationLetter = ({ className }: HeaderAnimationLetterProps) => {
     }, Math.random() * 200 + 200)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [generateLetter])
 
   return (
     <div className={`${styles.grid} ${className}`}>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   ApolloClient,
   ApolloProvider,
@@ -17,39 +17,40 @@ function App() {
     uri: import.meta.env.VITE_BASE_URL + '/graphql',
   })
 
-  const createUnauthenticatedClient = () => {
+  const createUnauthenticatedClient = useCallback(() => {
     return new ApolloClient({
       link: httpLink,
       cache: new InMemoryCache(),
     })
-  }
+  }, [httpLink])
 
-  const createAuthenticatedClient = (token: string) => {
-    const authLink = setContext((_, { headers }) => {
-      return {
-        headers: {
-          ...headers,
-          authorization: token ? `Bearer ${token}` : '',
-        },
-      }
-    })
+  const createAuthenticatedClient = useCallback(
+    (token: string) => {
+      const authLink = setContext((_, { headers }) => {
+        return {
+          headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : '',
+          },
+        }
+      })
 
-    return new ApolloClient({
-      link: authLink.concat(httpLink),
-      cache: new InMemoryCache(),
-    })
-  }
+      return new ApolloClient({
+        link: authLink.concat(httpLink),
+        cache: new InMemoryCache(),
+      })
+    },
+    [httpLink]
+  )
 
-  const token = useAppSelector((state) => state.userConnected.token)
+  const token = useAppSelector((state) => state.user.token)
   const [client, setClient] = useState(createUnauthenticatedClient())
 
   useEffect(() => {
-    if (token) {
-      setClient(createAuthenticatedClient(token))
-    } else {
-      setClient(createUnauthenticatedClient())
-    }
-  }, [token])
+    token
+      ? setClient(createAuthenticatedClient(token))
+      : setClient(createUnauthenticatedClient())
+  }, [token, createAuthenticatedClient, createUnauthenticatedClient])
 
   return (
     <ApolloProvider client={client}>

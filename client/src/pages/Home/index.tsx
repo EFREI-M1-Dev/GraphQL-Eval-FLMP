@@ -41,6 +41,7 @@ const Home = () => {
           {articles.map((article: Article) => {
             return (
               <ArticleCard
+                key={article.id}
                 id={article?.id}
                 title={article.title}
                 author={article.author}

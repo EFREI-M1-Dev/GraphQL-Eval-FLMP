@@ -3,6 +3,5 @@ export default interface UserInterface {
   password: string
   passwordConfirm: string
   img: string
-  lastname: string
-  firstname: string
+  username: string
 }

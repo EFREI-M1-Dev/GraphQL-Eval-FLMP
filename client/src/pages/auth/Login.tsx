@@ -60,7 +60,7 @@ const Login = () => {
         <div className={styles.auth__forms__content}>
           <form onSubmit={handleSubmit}>
             <div className={styles.auth__forms__content__input}>
-              <label htmlFor="username">Nom d'utilisateur</label>
+              <label htmlFor="username">Nom d&apos;utilisateur</label>
               <input
                 ref={usernameRef}
                 type="username"
@@ -84,7 +84,7 @@ const Login = () => {
             )}
             <div className={styles.auth__forms__infos}>
               <p>
-                Vous n'avez pas encore de compte ?&nbsp;
+                Vous n&apos;avez pas encore de compte ?&nbsp;
                 <Link to="/register">Inscrivez-vous</Link>
               </p>
             </div>

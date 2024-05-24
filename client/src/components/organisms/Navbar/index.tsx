@@ -21,7 +21,7 @@ const Navbar = ({ publishAction, canBeSend }: NavbarProps) => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
 
-  const loggedUser = useAppSelector((state) => state.userConnected)
+  const loggedUser = useAppSelector((state) => state.user)
 
   return loggedUser.token ? (
     <nav className={styles.navbar_logged}>
