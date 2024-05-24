@@ -1,3 +1,4 @@
+import { ChangeEvent, useEffect, useState } from 'react'
 import styles from './styles.module.scss'
 
 /* components */
@@ -5,6 +6,9 @@ import Button from '../../components/atoms/Button'
 import ArticleCard from '../../components/organisms/ArticleCard'
 import GridArticleCards from '../../components/templates/GridArticleCards'
 import HeaderAnimationLetter from './HeaderAnimationLetter'
+import Navbar from '../../components/organisms/Navbar'
+import Icon from '../../components/atoms/Icon'
+import Modal from '../../components/molecules/Modal'
 
 /* graphql */
 import {
@@ -12,15 +16,40 @@ import {
   SortOrder,
   useGetArticlesQuery,
 } from '../../generated/graphql'
-import Navbar from '../../components/organisms/Navbar'
-import { useEffect, useState } from 'react'
-import Icon from '../../components/atoms/Icon'
+import InputSelect from '../../components/molecules/InputSelect'
+import { AnimatePresence } from 'framer-motion'
 
 const Home = () => {
-  const { loading, data, refetch } = useGetArticlesQuery({
-    variables: { sort: { createdAt: SortOrder.Desc, likes: SortOrder.Asc } },
-  })
   const [articles, setArticles] = useState<Article[]>([])
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [filter, setFilter] = useState({
+    'date-order': 'Desc',
+    'like-order': 'Asc',
+  })
+
+  const mapSortOrder = (order: string) => {
+    return order === 'Asc' ? SortOrder.Asc : SortOrder.Desc
+  }
+
+  const dateOrder = mapSortOrder(filter['date-order'])
+  const likeOrder = mapSortOrder(filter['like-order'])
+
+  const { loading, data, refetch } = useGetArticlesQuery({
+    variables: {
+      sort: {
+        createdAt: dateOrder,
+        likes: likeOrder,
+      },
+    },
+  })
+
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
 
   useEffect(() => {
     refetch().then((r) => console.log(r))
@@ -31,6 +60,14 @@ const Home = () => {
       setArticles(data?.articles as Article[])
     }
   }, [loading, data])
+
+  const handleChangeOrder = (event: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = event.target
+    setFilter({
+      ...filter,
+      [name]: value,
+    })
+  }
 
   return (
     <div className={styles.home}>
@@ -48,11 +85,28 @@ const Home = () => {
       </div>
 
       <div className={styles.filter_bar}>
-        <div>
-          <Button widthAuto outline>
+        <div className={styles.content}>
+          <Button widthAuto outline onClick={openModal}>
             <Icon color="#000" name="filter" />
             <span>Filter</span>
           </Button>
+
+          <AnimatePresence>
+            {isModalOpen && (
+              <Modal closeModal={closeModal}>
+                <InputSelect
+                  label="Date"
+                  value={filter['date-order']}
+                  onChange={handleChangeOrder}
+                />
+                <InputSelect
+                  label="Likes"
+                  value={filter['like-order']}
+                  onChange={handleChangeOrder}
+                />
+              </Modal>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
