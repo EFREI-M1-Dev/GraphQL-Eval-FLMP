@@ -28,7 +28,7 @@ const ArticleCard = ({
         <a href="">{author?.username}</a>
       </div>
       <h3>{title}</h3>
-      <p>{content}</p>
+      <p>{content?.substring(0, 160)}..</p>
       <div className={styles.infos}>
         <span>3 min</span>•<span>{moment(createdAt).format('DD/MM/YY')}</span>
       </div>

@@ -6,7 +6,11 @@
   justify-content: center;
   background: $yellow;
   border-bottom: 1px solid #000;
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100;
 
   > div {
     width: 100%;
@@ -49,6 +53,13 @@
   align-items: center;
   height: 57px;
   padding: 0 24px;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #fff;
+  border-bottom: 1px solid $black;
 
   > div {
     width: 100%;

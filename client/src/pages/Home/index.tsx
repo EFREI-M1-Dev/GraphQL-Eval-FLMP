@@ -19,9 +19,9 @@ const Home = () => {
     if (data) {
       setArticles(data?.articles as Article[])
     }
+    refetch().then(r => console.log(r));
   }, [loading, data])
 
-  refetch().then(r => console.log(r));
 
   return (
     <div className={styles.home}>
