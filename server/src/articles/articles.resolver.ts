@@ -61,6 +61,18 @@ export class ArticlesResolver {
     return this.articlesService.getArticleLikesCount(id);
   }
 
+  @Query('hasUserLikedArticle')
+  @UseGuards(JwtAuthGuard)
+  hasUserLikedArticle(
+    @Args('id') id: number,
+    @Context() context: GraphQLContext,
+  ) {
+    return this.articlesService.hasUserLikedArticle(
+      id,
+      context.req.user.userId,
+    );
+  }
+
   @Mutation('updateArticle')
   update(@Args('updateArticleInput') updateArticleInput: UpdateArticleInput) {
     return this.articlesService.update(

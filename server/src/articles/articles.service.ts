@@ -79,6 +79,18 @@ export class ArticlesService {
     });
   }
 
+  async hasUserLikedArticle(articleId: number, userId: number) {
+    const like = await this.prisma.like.findUnique({
+      where: {
+        userId_articleId: {
+          userId: userId,
+          articleId: articleId,
+        },
+      },
+    });
+    return like !== null;
+  }
+
   update(id: number, updateArticleInput: UpdateArticleInput) {
     return this.prisma.article.update({
       data: { ...updateArticleInput },
