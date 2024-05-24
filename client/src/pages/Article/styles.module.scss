@@ -12,6 +12,27 @@
     padding: 10px;
   }
 
+  .userlogged {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    align-items: center;
+
+    &__bar {
+      display: flex;
+      gap: 4px;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid $black;
+    }
+
+    Button {
+      font-size: 16px;
+      font-family: $roboto;
+    }
+  }
+
   .head {
     margin-top: 50px;
 
@@ -24,7 +45,7 @@
       color: $black;
     }
 
-    & > img{
+    & > img {
       max-height: 250px;
       width: 100%;
       object-fit: cover;
@@ -53,19 +74,20 @@
       color: $black;
       font-family: $roboto;
 
-      p{
-        &:first-child{
+      p {
+        &:first-child {
           text-transform: capitalize;
         }
-        &:last-child{
-            color: $gray;
+
+        &:last-child {
+          color: $gray;
           font-size: 13px;
         }
       }
     }
   }
 
-  .misc{
+  .misc {
     margin-top: 32px;
     display: flex;
     gap: 50px;
@@ -73,9 +95,10 @@
     color: $black;
     font-family: $roboto;
 
-    svg{
+    svg {
       cursor: pointer;
-      &:hover{
+
+      &:hover {
         path {
           fill: black;
         }
@@ -83,7 +106,7 @@
     }
   }
 
-  .content{
+  .content {
     margin-top: 50px;
     font-size: 20px;
     text-align: justify;

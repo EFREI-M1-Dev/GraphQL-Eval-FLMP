@@ -6,6 +6,7 @@ import Save from './icons/Save'
 import Search from './icons/Search'
 import Write from './icons/Write'
 import Filter from './icons/Filter'
+import Trash from "./icons/Trash.tsx";
 
 type IconMap = {
   [key: string]: React.FC<React.SVGProps<SVGSVGElement>>
@@ -19,6 +20,7 @@ const icons: IconMap = {
   search: Search,
   write: Write,
   filter: Filter,
+  trash: Trash
 }
 
 export default icons

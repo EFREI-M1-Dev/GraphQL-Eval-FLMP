@@ -5,6 +5,7 @@ query GetArticle($id: Int!) {
         image
         createdAt
         author {
+            id
             username
             avatar
         }

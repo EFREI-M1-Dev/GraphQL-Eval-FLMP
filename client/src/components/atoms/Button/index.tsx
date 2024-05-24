@@ -7,6 +7,7 @@ type ButtonProps = {
   color?: 'black' | 'green'
   active?: boolean
   outline?: boolean
+  underline?: boolean
   widthAuto?: boolean
   onClick?: () => void
   className?: string
@@ -19,6 +20,7 @@ const Button = ({
   active = false,
   outline = false,
   widthAuto = false,
+  underline = false,
   className,
   onClick,
 }: ButtonProps) => {
@@ -30,6 +32,7 @@ const Button = ({
         [styles[`color-${color}`]]: color,
         [styles.active]: active,
         [styles.outline]: outline,
+        [styles.underline]: underline,
         [styles['width-auto']]: widthAuto,
       })}
     >

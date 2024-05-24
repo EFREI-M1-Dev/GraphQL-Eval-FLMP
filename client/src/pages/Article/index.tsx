@@ -5,6 +5,8 @@ import { Article, useGetArticleQuery } from '../../generated/graphql.tsx'
 import { useEffect, useState } from 'react'
 import moment from 'moment/moment'
 import Icon from '../../components/atoms/Icon'
+import {decodedToken} from "../../hooks/decodedToken.tsx";
+import Button from "../../components/atoms/Button";
 
 const ArticlePage = () => {
   const { id } = useParams()
@@ -12,6 +14,8 @@ const ArticlePage = () => {
     variables: { id: parseInt(id || '') },
   })
   const [article, setArticle] = useState<Article>()
+  const idUserConnected = decodedToken();
+  const currentUser = idUserConnected === article?.author?.id;
 
   useEffect(() => {
     refetch()
@@ -29,6 +33,26 @@ const ArticlePage = () => {
 
       <div className={styles.article}>
         <div className={styles.width}>
+          {
+            !currentUser ? <></> :
+                <div className={styles.userlogged__bar}>
+                  <p>
+                    Vous êtes l'auteur de cet article, vous pouvez :
+                  </p>
+                  <div className={styles.userlogged}>
+                    <Button widthAuto underline>
+                      <Icon name="write" color="#242424" />
+                      <span>Modifier</span>
+                    </Button>
+                    <Button widthAuto underline>
+                      <Icon name="trash" color="#242424" />
+                      <span>Supprimer</span>
+                    </Button>
+                  </div>
+                </div>
+          }
+          <div className="user-logged" >
+          </div>
           <div className={styles.head}>
             <img
               src={

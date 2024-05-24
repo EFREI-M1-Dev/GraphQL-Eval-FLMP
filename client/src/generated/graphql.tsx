@@ -192,7 +192,7 @@ export type GetArticleQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null };
+export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null } | null };
 
 export type GetArticlesQueryVariables = Exact<{
   sort: ArticleSortInput;
@@ -231,6 +231,7 @@ export const GetArticleDocument = gql`
     image
     createdAt
     author {
+      id
       username
       avatar
     }
