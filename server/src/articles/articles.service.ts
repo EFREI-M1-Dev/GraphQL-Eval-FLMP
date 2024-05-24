@@ -78,7 +78,13 @@ export class ArticlesService {
     });
   }
 
-  remove(id: number) {
-    return this.prisma.article.delete({ where: { id } });
+  async remove(id: number) {
+    await this.prisma.like.deleteMany({
+      where: { articleId: id },
+    });
+
+    return this.prisma.article.delete({
+      where: { id: id },
+    });
   }
 }
