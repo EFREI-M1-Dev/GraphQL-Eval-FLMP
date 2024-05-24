@@ -8,7 +8,7 @@ import GridArticleCards from '../../components/templates/GridArticleCards'
 import HeaderAnimationLetter from './HeaderAnimationLetter'
 import Navbar from '../../components/organisms/Navbar'
 import Icon from '../../components/atoms/Icon'
-import Modal from '../../components/molecules/Modal'
+import Filter from './Filter'
 
 /* graphql */
 import {
@@ -16,13 +16,16 @@ import {
   SortOrder,
   useGetArticlesQuery,
 } from '../../generated/graphql'
-import InputSelect from '../../components/molecules/InputSelect'
-import { AnimatePresence } from 'framer-motion'
+
+export type filterProps = {
+  'date-order': string
+  'like-order': string
+}
 
 const Home = () => {
   const [articles, setArticles] = useState<Article[]>([])
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [filter, setFilter] = useState({
+  const [filter, setFilter] = useState<filterProps>({
     'date-order': 'Desc',
     'like-order': 'Asc',
   })
@@ -91,22 +94,12 @@ const Home = () => {
             <span>Filter</span>
           </Button>
 
-          <AnimatePresence>
-            {isModalOpen && (
-              <Modal closeModal={closeModal}>
-                <InputSelect
-                  label="Date"
-                  value={filter['date-order']}
-                  onChange={handleChangeOrder}
-                />
-                <InputSelect
-                  label="Likes"
-                  value={filter['like-order']}
-                  onChange={handleChangeOrder}
-                />
-              </Modal>
-            )}
-          </AnimatePresence>
+          <Filter
+            isModalOpen={isModalOpen}
+            closeModal={closeModal}
+            filter={filter}
+            handleChangeOrder={handleChangeOrder}
+          />
         </div>
       </div>
 

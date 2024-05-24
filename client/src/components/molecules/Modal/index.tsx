@@ -4,10 +4,11 @@ import { motion } from 'framer-motion'
 
 type ModalProps = {
   children: React.ReactElement | React.ReactElement[]
+  className?: string
   closeModal: () => void
 }
 
-const Modal = ({ children, closeModal }: ModalProps) => {
+const Modal = ({ children, className, closeModal }: ModalProps) => {
   const modalRef = useRef<HTMLDivElement>(null)
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -25,7 +26,7 @@ const Modal = ({ children, closeModal }: ModalProps) => {
 
   return (
     <motion.div
-      className={styles.modal}
+      className={`${styles.modal} ${className ? className : ''}`}
       ref={modalRef}
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
