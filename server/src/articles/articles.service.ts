@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { ArticleSortInput } from './dto/sort-article.input';
 import { ArticleFilterInput } from './dto/filter-article-input';
 import { Prisma } from '@prisma/client';
+import { getRandomInt } from 'src/utils/random';
 
 @Injectable()
 export class ArticlesService {
@@ -18,7 +19,7 @@ export class ArticlesService {
         author: {
           connect: { username },
         },
-        image: 'http://localhost:3000/static/cover-1.jpg',
+        image: `http://localhost:3000/static/cover-${getRandomInt(1, 4)}.jpg`,
       },
     });
   }
