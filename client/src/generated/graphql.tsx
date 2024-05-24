@@ -29,6 +29,18 @@ export type Article = {
   title?: Maybe<Scalars['String']['output']>;
 };
 
+export type ArticleFilterInput = {
+  authorId?: InputMaybe<Scalars['Int']['input']>;
+  createdAfter?: InputMaybe<Scalars['Timestamp']['input']>;
+  createdBefore?: InputMaybe<Scalars['Timestamp']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ArticleSortInput = {
+  createdAt?: InputMaybe<SortOrder>;
+  likes?: InputMaybe<SortOrder>;
+};
+
 export type CreateArticleInput = {
   content: Scalars['String']['input'];
   title: Scalars['String']['input'];
@@ -136,6 +148,12 @@ export type QueryArticleArgs = {
 };
 
 
+export type QueryArticlesArgs = {
+  filter?: InputMaybe<ArticleFilterInput>;
+  sort?: InputMaybe<ArticleSortInput>;
+};
+
+
 export type QueryLikeArgs = {
   id: Scalars['Int']['input'];
 };
@@ -144,6 +162,11 @@ export type QueryLikeArgs = {
 export type QueryUserArgs = {
   username: Scalars['String']['input'];
 };
+
+export enum SortOrder {
+  Asc = 'asc',
+  Desc = 'desc'
+}
 
 export type UpdateArticleInput = {
   content: Scalars['String']['input'];
@@ -164,12 +187,66 @@ export type User = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
+export type GetArticleQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null };
+
 export type GetArticlesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null> };
 
 
+export const GetArticleDocument = gql`
+    query GetArticle($id: Int!) {
+  article(id: $id) {
+    title
+    content
+    image
+    createdAt
+    author {
+      username
+      avatar
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetArticleQuery__
+ *
+ * To run a query within a React component, call `useGetArticleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetArticleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetArticleQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetArticleQuery(baseOptions: Apollo.QueryHookOptions<GetArticleQuery, GetArticleQueryVariables> & ({ variables: GetArticleQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, options);
+      }
+export function useGetArticleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArticleQuery, GetArticleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, options);
+        }
+export function useGetArticleSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetArticleQuery, GetArticleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, options);
+        }
+export type GetArticleQueryHookResult = ReturnType<typeof useGetArticleQuery>;
+export type GetArticleLazyQueryHookResult = ReturnType<typeof useGetArticleLazyQuery>;
+export type GetArticleSuspenseQueryHookResult = ReturnType<typeof useGetArticleSuspenseQuery>;
+export type GetArticleQueryResult = Apollo.QueryResult<GetArticleQuery, GetArticleQueryVariables>;
 export const GetArticlesDocument = gql`
     query GetArticles {
   articles {
