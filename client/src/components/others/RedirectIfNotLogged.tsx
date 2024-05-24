@@ -8,7 +8,7 @@ type RedirectIfNotLoggedProps = {
 }
 
 const RedirectIfNotLogged = ({ children }: RedirectIfNotLoggedProps) => {
-  const token = useAppSelector((state) => state.userConnected.token)
+  const token = useAppSelector((state) => state?.user?.token)
   return token ? <Navigate to="/" /> : children
 }
 

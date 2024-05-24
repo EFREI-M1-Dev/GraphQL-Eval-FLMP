@@ -8,7 +8,8 @@ type RedirectIfLoggedProps = {
 }
 
 const RedirectIfLogged = ({ children }: RedirectIfLoggedProps) => {
-  const token = useAppSelector((state) => state.userConnected.token)
+  const token = useAppSelector((state) => state?.user?.token)
+
   return !token ? <Navigate to="/" /> : children
 }
 

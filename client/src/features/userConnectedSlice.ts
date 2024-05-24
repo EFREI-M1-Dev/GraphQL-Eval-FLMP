@@ -1,14 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-
-/* interfaces */
-import UserInterface from '../interfaces/UserInterface'
+import { createSlice } from '@reduxjs/toolkit'
+import { RootState } from '../store'
 
 const initialState = {
   id: '',
   mail: '',
   password: '',
-  firstName: '',
-  lastName: '',
+  username: '',
   img: '',
   token: '',
   isFetching: false,
@@ -24,15 +21,25 @@ const userSlice = createSlice({
     setLoggedUser: (state, action) => {
       state.token = action.payload.token
       state.img = action.payload.user.avatar
-      state.firstName = action.payload.user.username
+      state.username = action.payload.user.username
     },
     setUpdateUser: (state, action) => {
       state.mail = action.payload.data.userUpdated.email
-      state.firstName = action.payload.data.userUpdated.firstname
-      state.lastName = action.payload.data.userUpdated.lastname
+      state.username = action.payload.data.userUpdated.username
       state.img = action.payload.data.userUpdated.img
     },
-    logoutLoggedUser: (state) => (state = initialState),
+    logoutLoggedUser: (state) => {
+      state.id = initialState.id
+      state.mail = initialState.mail
+      state.password = initialState.password
+      state.username = initialState.username
+      state.img = initialState.img
+      state.token = initialState.token
+      state.isFetching = initialState.isFetching
+      state.isSuccess = initialState.isSuccess
+      state.isError = initialState.isError
+      state.errorMessage = initialState.errorMessage
+    },
   },
 })
 
@@ -40,4 +47,4 @@ export const { setLoggedUser, setUpdateUser, logoutLoggedUser } =
   userSlice.actions
 export default userSlice.reducer
 
-export const userSelector = (state: any) => state.user
+export const userSelector = (state: RootState) => state.user
