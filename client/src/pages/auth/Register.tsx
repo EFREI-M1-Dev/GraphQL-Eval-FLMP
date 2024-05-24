@@ -1,7 +1,7 @@
 import { FormEvent, useRef, useState } from 'react'
 import styles from './styles.module.scss'
-import { Link, useNavigate } from 'react-router-dom'
 import { gql, useMutation } from '@apollo/client'
+import { Link, useNavigate } from 'react-router-dom'
 
 /* components */
 import Button from '../../components/atoms/Button'

@@ -10,26 +10,6 @@ async function main() {
       username: 'alice',
       password: '$2b$10$i2RvlG/PUh8Yvl37oeFb3udWVznoduXayYvW1YXyYTlP7ltAri1cK',
       avatar: 'http://localhost:3000/static/avatar-1.png',
-      articles: {
-        create: [
-          {
-            title: 'Alice Article #1',
-            content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Alice Article #2',
-            content: `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Alice Article #3',
-            content: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-        ],
-      },
     },
   });
 
@@ -40,26 +20,6 @@ async function main() {
       username: 'bob',
       password: '$2b$10$i2RvlG/PUh8Yvl37oeFb3udWVznoduXayYvW1YXyYTlP7ltAri1cK',
       avatar: 'http://localhost:3000/static/avatar-2.png',
-      articles: {
-        create: [
-          {
-            title: 'Bob Article #1',
-            content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Bob Article #2',
-            content: `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Bob Article #3',
-            content: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-        ],
-      },
     },
   });
 
@@ -70,60 +30,182 @@ async function main() {
       username: 'charlie',
       password: '$2b$10$i2RvlG/PUh8Yvl37oeFb3udWVznoduXayYvW1YXyYTlP7ltAri1cK',
       avatar: 'http://localhost:3000/static/avatar-3.png',
-      articles: {
-        create: [
-          {
-            title: 'Charlie Article #1',
-            content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Charlie Article #2',
-            content: `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Charlie Article #3',
-            content: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-        ],
-      },
     },
   });
 
   const user4 = await prisma.user.upsert({
-    where: { username: 'dave' },
+    where: { username: 'diana' },
     update: {},
     create: {
-      username: 'dave',
+      username: 'diana',
       password: '$2b$10$i2RvlG/PUh8Yvl37oeFb3udWVznoduXayYvW1YXyYTlP7ltAri1cK',
       avatar: 'http://localhost:3000/static/avatar-4.png',
-      articles: {
-        create: [
-          {
-            title: 'Dave Article #1',
-            content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+    },
+  });
+
+  const article1 = await prisma.article.create({
+    data: {
+      title: 'Alice Article #1',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Dave Article #2',
-            content: `Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-          {
-            title: 'Dave Article #3',
-            content: `Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.`,
-            image: 'http://localhost:3000/static/cover-1.jpg',
-          },
-        ],
+      image: 'http://localhost:3000/static/cover-1.jpg',
+      author: {
+        connect: { id: user1.id },
       },
     },
   });
 
-  console.log({ user1, user2, user3, user4 });
+  const article1a = await prisma.article.create({
+    data: {
+      title: 'Alice Article #2',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      image: 'http://localhost:3000/static/cover-2.jpg',
+      author: {
+        connect: { id: user1.id },
+      },
+    },
+  });
+
+  const article2 = await prisma.article.create({
+    data: {
+      title: 'Bob Article #1',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      image: 'http://localhost:3000/static/cover-2.jpg',
+      author: {
+        connect: { id: user2.id },
+      },
+    },
+  });
+
+  const article2a = await prisma.article.create({
+    data: {
+      title: 'Bob Article #2',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      image: 'http://localhost:3000/static/cover-3.jpg',
+      author: {
+        connect: { id: user2.id },
+      },
+    },
+  });
+
+  const article3 = await prisma.article.create({
+    data: {
+      title: 'Charlie Article #1',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      image: 'http://localhost:3000/static/cover-3.jpg',
+      author: {
+        connect: { id: user3.id },
+      },
+    },
+  });
+
+  const article3a = await prisma.article.create({
+    data: {
+      title: 'Charlie Article #2',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      image: 'http://localhost:3000/static/cover-4.jpg',
+      author: {
+        connect: { id: user3.id },
+      },
+    },
+  });
+
+  const article4 = await prisma.article.create({
+    data: {
+      title: 'Diana Article #1',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      image: 'http://localhost:3000/static/cover-4.jpg',
+      author: {
+        connect: { id: user4.id },
+      },
+    },
+  });
+
+  const article4a = await prisma.article.create({
+    data: {
+      title: 'Diana Article #2',
+      content: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+      image: 'http://localhost:3000/static/cover-1.jpg',
+      author: {
+        connect: { id: user4.id },
+      },
+    },
+  });
+
+  await prisma.like.create({
+    data: {
+      user: {
+        connect: { id: user1.id },
+      },
+      article: {
+        connect: { id: article2.id },
+      },
+    },
+  });
+
+  await prisma.like.create({
+    data: {
+      user: {
+        connect: { id: user1.id },
+      },
+      article: {
+        connect: { id: article3.id },
+      },
+    },
+  });
+
+  await prisma.like.create({
+    data: {
+      user: {
+        connect: { id: user2.id },
+      },
+      article: {
+        connect: { id: article3.id },
+      },
+    },
+  });
+
+  await prisma.like.create({
+    data: {
+      user: {
+        connect: { id: user2.id },
+      },
+      article: {
+        connect: { id: article4.id },
+      },
+    },
+  });
+
+  await prisma.like.create({
+    data: {
+      user: {
+        connect: { id: user3.id },
+      },
+      article: {
+        connect: { id: article4.id },
+      },
+    },
+  });
+
+  await prisma.like.create({
+    data: {
+      user: {
+        connect: { id: user4.id },
+      },
+      article: {
+        connect: { id: article1.id },
+      },
+    },
+  });
+
+  console.log('Users, articles and likes created successfully.');
 }
 
 main()

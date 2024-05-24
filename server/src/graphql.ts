@@ -8,6 +8,23 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum SortOrder {
+    asc = "asc",
+    desc = "desc"
+}
+
+export interface ArticleSortInput {
+    likes?: Nullable<SortOrder>;
+    createdAt?: Nullable<SortOrder>;
+}
+
+export interface ArticleFilterInput {
+    title?: Nullable<string>;
+    authorId?: Nullable<number>;
+    createdAfter?: Nullable<Timestamp>;
+    createdBefore?: Nullable<Timestamp>;
+}
+
 export interface CreateArticleInput {
     title: string;
     content: string;
@@ -49,7 +66,7 @@ export interface Article {
 }
 
 export interface IQuery {
-    articles(): Nullable<Article>[] | Promise<Nullable<Article>[]>;
+    articles(filter?: Nullable<ArticleFilterInput>, sort?: Nullable<ArticleSortInput>): Nullable<Article>[] | Promise<Nullable<Article>[]>;
     article(id: number): Nullable<Article> | Promise<Nullable<Article>>;
     likes(): Nullable<Like>[] | Promise<Nullable<Like>[]>;
     like(id: number): Nullable<Like> | Promise<Nullable<Like>>;

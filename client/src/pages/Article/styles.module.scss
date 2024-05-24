@@ -1,0 +1,92 @@
+@import "../../assets/styles/variables.scss";
+
+.article {
+  padding-bottom: 5rem;
+
+  .width {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  .head {
+    margin-top: 50px;
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: $roboto;
+      margin-bottom: 2.2rem;
+      line-height: 1.2;
+      color: $black;
+    }
+
+    & > img{
+      max-height: 250px;
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      margin-bottom: 3rem;
+    }
+
+    &__user {
+      display: flex;
+      gap: 12px;
+
+      img {
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+      }
+
+    }
+
+    &__details {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      font-size: 16px;
+      color: $black;
+      font-family: $roboto;
+
+      p{
+        &:first-child{
+          text-transform: capitalize;
+        }
+        &:last-child{
+            color: $gray;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .misc{
+    margin-top: 32px;
+    display: flex;
+    gap: 50px;
+    font-size: 16px;
+    color: $black;
+    font-family: $roboto;
+
+    svg{
+      cursor: pointer;
+      &:hover{
+        path {
+          fill: black;
+        }
+      }
+    }
+  }
+
+  .content{
+    margin-top: 50px;
+    font-size: 20px;
+    text-align: justify;
+    color: $black;
+    font-family: $lora;
+    line-height: 1.8;
+  }
+}

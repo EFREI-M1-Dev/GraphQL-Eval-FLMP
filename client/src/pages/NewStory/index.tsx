@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 
 /* components */
 import Navbar from '../../components/organisms/Navbar'
+import {useNavigate} from "react-router-dom";
 
 /* graphql */
 /* import { CreateArticleInput } from '../../generated/graphql' */
@@ -23,6 +24,7 @@ const NewStory = () => {
     title: '',
     content: '',
   })
+  const navigate = useNavigate();
 
   const [postArticle, { data, loading, error }] = useMutation(CREATE_ARTICLE)
 
@@ -38,10 +40,15 @@ const NewStory = () => {
 
   const handleSubmit = async () => {
     try {
+      if (!formValues.title || !formValues.content) {
+        // TODO: message error ?
+        return
+      }
       const { data } = await postArticle({
         variables: { input: formValues },
       })
-      console.log(data)
+      console.log(data);
+      navigate(`/article/${data.createArticle.id}`);
     } catch (err) {
       console.error('Error posting article:', err)
     }
