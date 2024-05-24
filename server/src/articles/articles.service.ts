@@ -71,6 +71,14 @@ export class ArticlesService {
     return this.prisma.article.findUnique({ where: { id } });
   }
 
+  getArticleLikesCount(id: number) {
+    return this.prisma.like.count({
+      where: {
+        articleId: id,
+      },
+    });
+  }
+
   update(id: number, updateArticleInput: UpdateArticleInput) {
     return this.prisma.article.update({
       data: { ...updateArticleInput },

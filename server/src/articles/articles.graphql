@@ -41,6 +41,7 @@ input UpdateArticleInput {
 type Query {
   articles(filter: ArticleFilterInput, sort: ArticleSortInput): [Article]!
   article(id: Int!): Article
+  getArticleLikesCount(id: Int!): Int!
 }
 
 type Mutation {

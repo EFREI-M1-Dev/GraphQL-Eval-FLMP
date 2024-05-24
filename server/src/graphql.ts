@@ -59,6 +59,7 @@ export interface Article {
 export interface IQuery {
     articles(filter?: Nullable<ArticleFilterInput>, sort?: Nullable<ArticleSortInput>): Nullable<Article>[] | Promise<Nullable<Article>[]>;
     article(id: number): Nullable<Article> | Promise<Nullable<Article>>;
+    getArticleLikesCount(id: number): number | Promise<number>;
     likes(): Nullable<Like>[] | Promise<Nullable<Like>[]>;
     like(id: number): Nullable<Like> | Promise<Nullable<Like>>;
     users(): Nullable<User>[] | Promise<Nullable<User>[]>;

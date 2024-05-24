@@ -56,6 +56,11 @@ export class ArticlesResolver {
     return this.articlesService.findOne(id);
   }
 
+  @Query('getArticleLikesCount')
+  getArticleLikesCount(@Args('id') id: number) {
+    return this.articlesService.getArticleLikesCount(id);
+  }
+
   @Mutation('updateArticle')
   update(@Args('updateArticleInput') updateArticleInput: UpdateArticleInput) {
     return this.articlesService.update(
