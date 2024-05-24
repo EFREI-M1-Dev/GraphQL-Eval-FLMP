@@ -1,28 +1,16 @@
 import Button from '../../components/atoms/Button'
 import { Link, useNavigate } from 'react-router-dom'
-import AuthLayout from './AuthLayout.tsx'
+import AuthLayout from './AuthLayout'
 import styles from './styles.module.scss'
-import { gql, useMutation } from '@apollo/client'
-import { FormEvent, useRef, useState } from 'react'
-import { useAppDispatch } from '../../hooks/reduxHooks.tsx'
-import { setLoggedUser } from '../../features/userConnectedSlice.ts'
-
-const LOGIN_MUTATION = gql`
-  mutation login($input: LoginUserInput!) {
-    login(loginUserInput: $input) {
-      user {
-        username
-        avatar
-      }
-      token
-    }
-  }
-`
+import { FormEvent, useEffect, useRef, useState } from 'react'
+import { useAppDispatch } from '../../hooks/reduxHooks'
+import { setLoggedUser } from '../../features/userConnectedSlice'
+import { useLoginMutation } from '../../generated/graphql'
 
 const Login = () => {
   const navigate = useNavigate()
   const [msgError, setMsgError] = useState('')
-  const [login] = useMutation(LOGIN_MUTATION)
+  const [login, { data, loading, error }] = useLoginMutation()
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwordRef = useRef<HTMLInputElement>(null)
   const dispatch = useAppDispatch()
@@ -52,6 +40,17 @@ const Login = () => {
       setMsgError('Une erreur est survenue')
     }
   }
+
+  useEffect(() => {
+    if (loading) return
+    if (data) {
+      console.log('Login successful:', data)
+    }
+    if (error) {
+      console.error('Error:', error)
+      setMsgError('Une erreur est survenue')
+    }
+  }, [data, loading, error])
 
   return (
     <AuthLayout>

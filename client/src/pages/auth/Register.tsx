@@ -1,22 +1,15 @@
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useEffect, useRef, useState } from 'react'
 import styles from './styles.module.scss'
-import { gql, useMutation } from '@apollo/client'
 import { Link, useNavigate } from 'react-router-dom'
 
 /* components */
 import Button from '../../components/atoms/Button'
-import AuthLayout from './AuthLayout.tsx'
+import AuthLayout from './AuthLayout'
 
-const SIGNUP_MUTATION = gql`
-  mutation signup($input: LoginUserInput!) {
-    signup(loginUserInput: $input) {
-      username
-    }
-  }
-`
+import { useRegisterMutation } from '../../generated/graphql'
 
 const Register = () => {
-  const [register] = useMutation(SIGNUP_MUTATION)
+  const [signup, { data, loading, error }] = useRegisterMutation()
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwdRef = useRef<HTMLInputElement>(null)
   const [msgError, setMsgError] = useState('')
@@ -33,7 +26,7 @@ const Register = () => {
         return
       }
 
-      const { data } = await register({
+      const { data } = await signup({
         variables: { input: { username, password } },
       })
       if (data?.signup.username) {
@@ -46,6 +39,17 @@ const Register = () => {
       setMsgError('Une erreur est survenue')
     }
   }
+
+  useEffect(() => {
+    if (loading) return
+    if (data) {
+      console.log('Signup successful:', data)
+    }
+    if (error) {
+      console.error('Error:', error)
+      setMsgError('Une erreur est survenue')
+    }
+  }, [data, loading, error])
 
   return (
     <AuthLayout>
