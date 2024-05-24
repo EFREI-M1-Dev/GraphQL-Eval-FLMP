@@ -27,7 +27,9 @@ const Navbar = ({ publishAction, canBeSend }: NavbarProps) => {
     <nav className={styles.navbar_logged}>
       <div>
         <div>
+          <Link to="/">
           <MediumLogo className={styles.logo} />
+          </Link>
           <div className={styles.input_search}>
             <Icon name="search" color="#6B6B6B" />
             <input placeholder="Search" />

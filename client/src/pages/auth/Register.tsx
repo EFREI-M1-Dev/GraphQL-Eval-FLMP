@@ -4,8 +4,6 @@ import AuthLayout from "./AuthLayout.tsx";
 import styles from './styles.module.scss'
 import {gql, useMutation} from "@apollo/client";
 import {FormEvent, useRef, useState} from "react";
-import {useAppDispatch} from "../../hooks/reduxHooks.tsx";
-import {setLoggedUser} from "../../features/userConnectedSlice.ts";
 
 
 const SIGNUP_MUTATION = gql`

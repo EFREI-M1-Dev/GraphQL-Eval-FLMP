@@ -12,7 +12,7 @@ import Navbar from '../../components/organisms/Navbar'
 import { useEffect, useState } from 'react'
 
 const Home = () => {
-  const { loading, data } = useGetArticlesQuery({})
+  const { loading, data, refetch } = useGetArticlesQuery({})
   const [articles, setArticles] = useState<Article[]>([])
 
   useEffect(() => {
@@ -20,6 +20,8 @@ const Home = () => {
       setArticles(data?.articles as Article[])
     }
   }, [loading, data])
+
+  refetch().then(r => console.log(r));
 
   return (
     <div className={styles.home}>
