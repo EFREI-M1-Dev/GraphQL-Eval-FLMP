@@ -194,10 +194,26 @@ export type GetArticleQueryVariables = Exact<{
 
 export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null };
 
-export type GetArticlesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetArticlesQueryVariables = Exact<{
+  sort: ArticleSortInput;
+}>;
 
 
 export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null> };
+
+export type LoginMutationVariables = Exact<{
+  input: LoginUserInput;
+}>;
+
+
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'LoginResponse', token: string, user: { __typename?: 'User', username?: string | null, avatar?: string | null } } };
+
+export type RegisterMutationVariables = Exact<{
+  input: LoginUserInput;
+}>;
+
+
+export type RegisterMutation = { __typename?: 'Mutation', signup: { __typename?: 'User', username?: string | null } };
 
 
 export const GetArticleDocument = gql`
@@ -248,8 +264,8 @@ export type GetArticleLazyQueryHookResult = ReturnType<typeof useGetArticleLazyQ
 export type GetArticleSuspenseQueryHookResult = ReturnType<typeof useGetArticleSuspenseQuery>;
 export type GetArticleQueryResult = Apollo.QueryResult<GetArticleQuery, GetArticleQueryVariables>;
 export const GetArticlesDocument = gql`
-    query GetArticles {
-  articles {
+    query GetArticles($sort: ArticleSortInput!) {
+  articles(sort: $sort) {
     id
     title
     content
@@ -275,10 +291,11 @@ export const GetArticlesDocument = gql`
  * @example
  * const { data, loading, error } = useGetArticlesQuery({
  *   variables: {
+ *      sort: // value for 'sort'
  *   },
  * });
  */
-export function useGetArticlesQuery(baseOptions?: Apollo.QueryHookOptions<GetArticlesQuery, GetArticlesQueryVariables>) {
+export function useGetArticlesQuery(baseOptions: Apollo.QueryHookOptions<GetArticlesQuery, GetArticlesQueryVariables> & ({ variables: GetArticlesQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<GetArticlesQuery, GetArticlesQueryVariables>(GetArticlesDocument, options);
       }
@@ -294,3 +311,73 @@ export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
 export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
 export type GetArticlesSuspenseQueryHookResult = ReturnType<typeof useGetArticlesSuspenseQuery>;
 export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
+export const LoginDocument = gql`
+    mutation Login($input: LoginUserInput!) {
+  login(loginUserInput: $input) {
+    user {
+      username
+      avatar
+    }
+    token
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export const RegisterDocument = gql`
+    mutation Register($input: LoginUserInput!) {
+  signup(loginUserInput: $input) {
+    username
+  }
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;

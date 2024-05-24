@@ -7,13 +7,19 @@ import GridArticleCards from '../../components/templates/GridArticleCards'
 import HeaderAnimationLetter from './HeaderAnimationLetter'
 
 /* graphql */
-import { Article, useGetArticlesQuery } from '../../generated/graphql'
+import {
+  Article,
+  SortOrder,
+  useGetArticlesQuery,
+} from '../../generated/graphql'
 import Navbar from '../../components/organisms/Navbar'
 import { useEffect, useState } from 'react'
 import Icon from '../../components/atoms/Icon'
 
 const Home = () => {
-  const { loading, data, refetch } = useGetArticlesQuery({})
+  const { loading, data, refetch } = useGetArticlesQuery({
+    variables: { sort: { createdAt: SortOrder.Desc, likes: SortOrder.Asc } },
+  })
   const [articles, setArticles] = useState<Article[]>([])
 
   useEffect(() => {
