@@ -1,13 +1,13 @@
 query GetArticle($id: Int!) {
-    article(id: $id) {
-        title
-        content
-        image
-        createdAt
-        author {
-            id
-            username
-            avatar
-        }
+  article(id: $id) {
+    title
+    content
+    image
+    createdAt
+    author {
+      id
+      username
+      avatar
     }
+  }
 }

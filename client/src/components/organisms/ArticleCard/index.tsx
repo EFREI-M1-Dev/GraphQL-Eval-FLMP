@@ -1,18 +1,21 @@
-import { useNavigate } from 'react-router-dom'
-import Icon from '../../atoms/Icon'
-import styles from './styles.module.scss'
-import { Article } from '../../../generated/graphql'
 import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
+import styles from './styles.module.scss'
 
-const ArticleCard = ({
-  id,
-  title,
-  author,
-  content,
-  createdAt,
-  image,
-}: Article) => {
+/* components */
+import Icon from '../../atoms/Icon'
+
+/* graphql */
+import { Article } from '../../../generated/graphql'
+
+interface ArticleCardProps {
+  article: Article
+}
+
+const ArticleCard = ({ article }: ArticleCardProps) => {
   const navigate = useNavigate()
+
+  const { id, image, author, title, content, createdAt, likes } = article
 
   return (
     <div
@@ -36,7 +39,7 @@ const ArticleCard = ({
         <ul>
           <li>
             <Icon name="clap" color="#6B6B6B" />
-            <span>29</span>
+            <span>{likes?.length}</span>
           </li>
           <li>
             <Icon name="chat_bubble" color="#6B6B6B" />

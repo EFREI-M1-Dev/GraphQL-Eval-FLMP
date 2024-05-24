@@ -4,6 +4,9 @@ query GetArticles($sort: ArticleSortInput!) {
     title
     content
     image
+    likes {
+      id
+    }
     createdAt
     author {
       username

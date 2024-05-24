@@ -46,11 +46,6 @@ export type CreateArticleInput = {
   title: Scalars['String']['input'];
 };
 
-export type CreateLikeInput = {
-  articleId: Scalars['Int']['input'];
-  userId: Scalars['Int']['input'];
-};
-
 export type CreateUserInput = {
   password?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -84,7 +79,6 @@ export type Mutation = {
   removeLike?: Maybe<Like>;
   signup: User;
   updateArticle: Article;
-  updateLike: Like;
 };
 
 
@@ -94,7 +88,7 @@ export type MutationCreateArticleArgs = {
 
 
 export type MutationCreateLikeArgs = {
-  createLikeInput: CreateLikeInput;
+  articleId: Scalars['Int']['input'];
 };
 
 
@@ -114,7 +108,7 @@ export type MutationRemoveArticleArgs = {
 
 
 export type MutationRemoveLikeArgs = {
-  id: Scalars['Int']['input'];
+  articleId: Scalars['Int']['input'];
 };
 
 
@@ -127,15 +121,11 @@ export type MutationUpdateArticleArgs = {
   updateArticleInput: UpdateArticleInput;
 };
 
-
-export type MutationUpdateLikeArgs = {
-  updateLikeInput: UpdateLikeInput;
-};
-
 export type Query = {
   __typename?: 'Query';
   article?: Maybe<Article>;
   articles: Array<Maybe<Article>>;
+  getArticleLikesCount: Scalars['Int']['output'];
   like?: Maybe<Like>;
   likes: Array<Maybe<Like>>;
   user?: Maybe<User>;
@@ -151,6 +141,11 @@ export type QueryArticleArgs = {
 export type QueryArticlesArgs = {
   filter?: InputMaybe<ArticleFilterInput>;
   sort?: InputMaybe<ArticleSortInput>;
+};
+
+
+export type QueryGetArticleLikesCountArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -174,10 +169,6 @@ export type UpdateArticleInput = {
   title: Scalars['String']['input'];
 };
 
-export type UpdateLikeInput = {
-  id: Scalars['Int']['input'];
-};
-
 export type User = {
   __typename?: 'User';
   articles?: Maybe<Array<Article>>;
@@ -187,6 +178,13 @@ export type User = {
   username?: Maybe<Scalars['String']['output']>;
 };
 
+export type CreateLikeMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type CreateLikeMutation = { __typename?: 'Mutation', createLike: { __typename?: 'Like', id: number } };
+
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
@@ -194,12 +192,19 @@ export type GetArticleQueryVariables = Exact<{
 
 export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null } | null };
 
+export type GetNumberLikeQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetNumberLikeQuery = { __typename?: 'Query', getArticleLikesCount: number };
+
 export type GetArticlesQueryVariables = Exact<{
   sort: ArticleSortInput;
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, likes?: Array<{ __typename?: 'Like', id: number }> | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null> };
 
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
@@ -223,6 +228,39 @@ export type RegisterMutationVariables = Exact<{
 export type RegisterMutation = { __typename?: 'Mutation', signup: { __typename?: 'User', username?: string | null } };
 
 
+export const CreateLikeDocument = gql`
+    mutation CreateLike($id: Int!) {
+  createLike(articleId: $id) {
+    id
+  }
+}
+    `;
+export type CreateLikeMutationFn = Apollo.MutationFunction<CreateLikeMutation, CreateLikeMutationVariables>;
+
+/**
+ * __useCreateLikeMutation__
+ *
+ * To run a mutation, you first call `useCreateLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLikeMutation, { data, loading, error }] = useCreateLikeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useCreateLikeMutation(baseOptions?: Apollo.MutationHookOptions<CreateLikeMutation, CreateLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateLikeMutation, CreateLikeMutationVariables>(CreateLikeDocument, options);
+      }
+export type CreateLikeMutationHookResult = ReturnType<typeof useCreateLikeMutation>;
+export type CreateLikeMutationResult = Apollo.MutationResult<CreateLikeMutation>;
+export type CreateLikeMutationOptions = Apollo.BaseMutationOptions<CreateLikeMutation, CreateLikeMutationVariables>;
 export const GetArticleDocument = gql`
     query GetArticle($id: Int!) {
   article(id: $id) {
@@ -271,6 +309,44 @@ export type GetArticleQueryHookResult = ReturnType<typeof useGetArticleQuery>;
 export type GetArticleLazyQueryHookResult = ReturnType<typeof useGetArticleLazyQuery>;
 export type GetArticleSuspenseQueryHookResult = ReturnType<typeof useGetArticleSuspenseQuery>;
 export type GetArticleQueryResult = Apollo.QueryResult<GetArticleQuery, GetArticleQueryVariables>;
+export const GetNumberLikeDocument = gql`
+    query GetNumberLike($id: Int!) {
+  getArticleLikesCount(id: $id)
+}
+    `;
+
+/**
+ * __useGetNumberLikeQuery__
+ *
+ * To run a query within a React component, call `useGetNumberLikeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNumberLikeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNumberLikeQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetNumberLikeQuery(baseOptions: Apollo.QueryHookOptions<GetNumberLikeQuery, GetNumberLikeQueryVariables> & ({ variables: GetNumberLikeQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNumberLikeQuery, GetNumberLikeQueryVariables>(GetNumberLikeDocument, options);
+      }
+export function useGetNumberLikeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNumberLikeQuery, GetNumberLikeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNumberLikeQuery, GetNumberLikeQueryVariables>(GetNumberLikeDocument, options);
+        }
+export function useGetNumberLikeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetNumberLikeQuery, GetNumberLikeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetNumberLikeQuery, GetNumberLikeQueryVariables>(GetNumberLikeDocument, options);
+        }
+export type GetNumberLikeQueryHookResult = ReturnType<typeof useGetNumberLikeQuery>;
+export type GetNumberLikeLazyQueryHookResult = ReturnType<typeof useGetNumberLikeLazyQuery>;
+export type GetNumberLikeSuspenseQueryHookResult = ReturnType<typeof useGetNumberLikeSuspenseQuery>;
+export type GetNumberLikeQueryResult = Apollo.QueryResult<GetNumberLikeQuery, GetNumberLikeQueryVariables>;
 export const GetArticlesDocument = gql`
     query GetArticles($sort: ArticleSortInput!) {
   articles(sort: $sort) {
@@ -278,6 +354,9 @@ export const GetArticlesDocument = gql`
     title
     content
     image
+    likes {
+      id
+    }
     createdAt
     author {
       username

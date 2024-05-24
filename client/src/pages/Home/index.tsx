@@ -106,17 +106,7 @@ const Home = () => {
       <div className={styles.article_list}>
         <GridArticleCards>
           {articles.map((article: Article) => {
-            return (
-              <ArticleCard
-                key={article.id}
-                id={article?.id}
-                title={article.title}
-                author={article.author}
-                content={article.content}
-                createdAt={article.createdAt}
-                image={article.image}
-              />
-            )
+            return <ArticleCard article={article} />
           })}
         </GridArticleCards>
       </div>
