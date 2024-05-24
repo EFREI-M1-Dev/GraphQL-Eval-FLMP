@@ -16,12 +16,14 @@ const Home = () => {
   const [articles, setArticles] = useState<Article[]>([])
 
   useEffect(() => {
+    refetch().then((r) => console.log(r))
+  }, [])
+
+  useEffect(() => {
     if (data) {
       setArticles(data?.articles as Article[])
     }
-    refetch().then(r => console.log(r));
   }, [loading, data])
-
 
   return (
     <div className={styles.home}>
