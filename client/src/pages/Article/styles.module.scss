@@ -99,6 +99,16 @@
       gap: 5px;
       color: #6b6b6b;
       cursor: pointer;
+      user-select: none;
+
+      &.article_liked {
+        color: #000;
+
+        svg {
+          background: #4c15151e;
+          border-radius: 100%;
+        }
+      }
 
       &:hover {
         color: $black;

@@ -126,6 +126,7 @@ export type Query = {
   article?: Maybe<Article>;
   articles: Array<Maybe<Article>>;
   getArticleLikesCount: Scalars['Int']['output'];
+  hasUserLikedArticle: Scalars['Boolean']['output'];
   like?: Maybe<Like>;
   likes: Array<Maybe<Like>>;
   user?: Maybe<User>;
@@ -145,6 +146,11 @@ export type QueryArticlesArgs = {
 
 
 export type QueryGetArticleLikesCountArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryHasUserLikedArticleArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -185,6 +191,13 @@ export type CreateLikeMutationVariables = Exact<{
 
 export type CreateLikeMutation = { __typename?: 'Mutation', createLike: { __typename?: 'Like', id: number } };
 
+export type DeleteLikeMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type DeleteLikeMutation = { __typename?: 'Mutation', removeLike?: { __typename?: 'Like', id: number } | null };
+
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
@@ -192,12 +205,26 @@ export type GetArticleQueryVariables = Exact<{
 
 export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null } | null };
 
+export type GetHasUserLikedArticleQueryVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type GetHasUserLikedArticleQuery = { __typename?: 'Query', hasUserLikedArticle: boolean };
+
 export type GetNumberLikeQueryVariables = Exact<{
   id: Scalars['Int']['input'];
 }>;
 
 
 export type GetNumberLikeQuery = { __typename?: 'Query', getArticleLikesCount: number };
+
+export type RemoveArticleMutationVariables = Exact<{
+  id: Scalars['Int']['input'];
+}>;
+
+
+export type RemoveArticleMutation = { __typename?: 'Mutation', removeArticle?: { __typename?: 'Article', id: number } | null };
 
 export type GetArticlesQueryVariables = Exact<{
   sort: ArticleSortInput;
@@ -261,6 +288,39 @@ export function useCreateLikeMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateLikeMutationHookResult = ReturnType<typeof useCreateLikeMutation>;
 export type CreateLikeMutationResult = Apollo.MutationResult<CreateLikeMutation>;
 export type CreateLikeMutationOptions = Apollo.BaseMutationOptions<CreateLikeMutation, CreateLikeMutationVariables>;
+export const DeleteLikeDocument = gql`
+    mutation DeleteLike($id: Int!) {
+  removeLike(articleId: $id) {
+    id
+  }
+}
+    `;
+export type DeleteLikeMutationFn = Apollo.MutationFunction<DeleteLikeMutation, DeleteLikeMutationVariables>;
+
+/**
+ * __useDeleteLikeMutation__
+ *
+ * To run a mutation, you first call `useDeleteLikeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteLikeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteLikeMutation, { data, loading, error }] = useDeleteLikeMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteLikeMutation(baseOptions?: Apollo.MutationHookOptions<DeleteLikeMutation, DeleteLikeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteLikeMutation, DeleteLikeMutationVariables>(DeleteLikeDocument, options);
+      }
+export type DeleteLikeMutationHookResult = ReturnType<typeof useDeleteLikeMutation>;
+export type DeleteLikeMutationResult = Apollo.MutationResult<DeleteLikeMutation>;
+export type DeleteLikeMutationOptions = Apollo.BaseMutationOptions<DeleteLikeMutation, DeleteLikeMutationVariables>;
 export const GetArticleDocument = gql`
     query GetArticle($id: Int!) {
   article(id: $id) {
@@ -309,6 +369,44 @@ export type GetArticleQueryHookResult = ReturnType<typeof useGetArticleQuery>;
 export type GetArticleLazyQueryHookResult = ReturnType<typeof useGetArticleLazyQuery>;
 export type GetArticleSuspenseQueryHookResult = ReturnType<typeof useGetArticleSuspenseQuery>;
 export type GetArticleQueryResult = Apollo.QueryResult<GetArticleQuery, GetArticleQueryVariables>;
+export const GetHasUserLikedArticleDocument = gql`
+    query GetHasUserLikedArticle($id: Int!) {
+  hasUserLikedArticle(id: $id)
+}
+    `;
+
+/**
+ * __useGetHasUserLikedArticleQuery__
+ *
+ * To run a query within a React component, call `useGetHasUserLikedArticleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetHasUserLikedArticleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetHasUserLikedArticleQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetHasUserLikedArticleQuery(baseOptions: Apollo.QueryHookOptions<GetHasUserLikedArticleQuery, GetHasUserLikedArticleQueryVariables> & ({ variables: GetHasUserLikedArticleQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetHasUserLikedArticleQuery, GetHasUserLikedArticleQueryVariables>(GetHasUserLikedArticleDocument, options);
+      }
+export function useGetHasUserLikedArticleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetHasUserLikedArticleQuery, GetHasUserLikedArticleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetHasUserLikedArticleQuery, GetHasUserLikedArticleQueryVariables>(GetHasUserLikedArticleDocument, options);
+        }
+export function useGetHasUserLikedArticleSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetHasUserLikedArticleQuery, GetHasUserLikedArticleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetHasUserLikedArticleQuery, GetHasUserLikedArticleQueryVariables>(GetHasUserLikedArticleDocument, options);
+        }
+export type GetHasUserLikedArticleQueryHookResult = ReturnType<typeof useGetHasUserLikedArticleQuery>;
+export type GetHasUserLikedArticleLazyQueryHookResult = ReturnType<typeof useGetHasUserLikedArticleLazyQuery>;
+export type GetHasUserLikedArticleSuspenseQueryHookResult = ReturnType<typeof useGetHasUserLikedArticleSuspenseQuery>;
+export type GetHasUserLikedArticleQueryResult = Apollo.QueryResult<GetHasUserLikedArticleQuery, GetHasUserLikedArticleQueryVariables>;
 export const GetNumberLikeDocument = gql`
     query GetNumberLike($id: Int!) {
   getArticleLikesCount(id: $id)
@@ -347,6 +445,39 @@ export type GetNumberLikeQueryHookResult = ReturnType<typeof useGetNumberLikeQue
 export type GetNumberLikeLazyQueryHookResult = ReturnType<typeof useGetNumberLikeLazyQuery>;
 export type GetNumberLikeSuspenseQueryHookResult = ReturnType<typeof useGetNumberLikeSuspenseQuery>;
 export type GetNumberLikeQueryResult = Apollo.QueryResult<GetNumberLikeQuery, GetNumberLikeQueryVariables>;
+export const RemoveArticleDocument = gql`
+    mutation RemoveArticle($id: Int!) {
+  removeArticle(id: $id) {
+    id
+  }
+}
+    `;
+export type RemoveArticleMutationFn = Apollo.MutationFunction<RemoveArticleMutation, RemoveArticleMutationVariables>;
+
+/**
+ * __useRemoveArticleMutation__
+ *
+ * To run a mutation, you first call `useRemoveArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeArticleMutation, { data, loading, error }] = useRemoveArticleMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useRemoveArticleMutation(baseOptions?: Apollo.MutationHookOptions<RemoveArticleMutation, RemoveArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveArticleMutation, RemoveArticleMutationVariables>(RemoveArticleDocument, options);
+      }
+export type RemoveArticleMutationHookResult = ReturnType<typeof useRemoveArticleMutation>;
+export type RemoveArticleMutationResult = Apollo.MutationResult<RemoveArticleMutation>;
+export type RemoveArticleMutationOptions = Apollo.BaseMutationOptions<RemoveArticleMutation, RemoveArticleMutationVariables>;
 export const GetArticlesDocument = gql`
     query GetArticles($sort: ArticleSortInput!) {
   articles(sort: $sort) {

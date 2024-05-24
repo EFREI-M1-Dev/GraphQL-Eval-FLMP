@@ -1,21 +1,34 @@
+import { useEffect, useState } from 'react'
 import styles from './styles.module.scss'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import moment from 'moment/moment'
+
+/* components */
 import Navbar from '../../components/organisms/Navbar'
+import Icon from '../../components/atoms/Icon'
+import Button from '../../components/atoms/Button'
+
+/* graphql */
 import {
   Article,
   useCreateLikeMutation,
+  useDeleteLikeMutation,
   useGetArticleQuery,
+  useGetHasUserLikedArticleQuery,
   useGetNumberLikeQuery,
+  useRemoveArticleMutation,
 } from '../../generated/graphql.tsx'
-import { useEffect, useState } from 'react'
-import moment from 'moment/moment'
-import Icon from '../../components/atoms/Icon'
+
+/* hooks */
 import { decodedToken } from '../../hooks/decodedToken.tsx'
-import Button from '../../components/atoms/Button'
 
 const ArticlePage = () => {
   const { id } = useParams()
   const [nbrLikes, setNbrLikes] = useState<number | null>(null)
+  const [userHasLikedArticle, setUserHasLikedArticle] = useState<
+    boolean | null
+  >(null)
+  const navigate = useNavigate()
 
   const { loading, data, refetch } = useGetArticleQuery({
     variables: { id: parseInt(id || '') },
@@ -25,6 +38,8 @@ const ArticlePage = () => {
   const currentUser = idUserConnected === article?.author?.id
 
   const [createLike] = useCreateLikeMutation()
+  const [deleteLike] = useDeleteLikeMutation()
+  const [deleteArticle] = useRemoveArticleMutation()
 
   useEffect(() => {
     refetch()
@@ -40,22 +55,62 @@ const ArticlePage = () => {
     variables: { id: parseInt(id || '') },
   })
 
+  const getUserLiked = useGetHasUserLikedArticleQuery({
+    variables: { id: parseInt(id || '') },
+  })
+
   useEffect(() => {
     if (getLikesNbr.data) {
       setNbrLikes(getLikesNbr.data.getArticleLikesCount)
     }
   }, [getLikesNbr.loading, getLikesNbr.data])
 
+  useEffect(() => {
+    if (getUserLiked.data) {
+      setUserHasLikedArticle(getUserLiked.data.hasUserLikedArticle)
+    }
+  }, [getUserLiked.loading, getUserLiked.data])
+
   const handleClickStateLike = async () => {
+    console.log(userHasLikedArticle)
+    if (userHasLikedArticle) {
+      try {
+        const { data } = await deleteLike({
+          variables: { id: parseInt(id || '') },
+        })
+        if (data?.removeLike) {
+          getLikesNbr.refetch()
+          getUserLiked.refetch()
+        }
+      } catch (err) {
+        console.error('Error liked article:', err)
+      }
+    } else {
+      try {
+        const { data } = await createLike({
+          variables: { id: parseInt(id || '') },
+        })
+        if (data?.createLike) {
+          getLikesNbr.refetch()
+          getUserLiked.refetch()
+        }
+      } catch (err) {
+        console.error('Error liked article:', err)
+      }
+    }
+  }
+
+  const handleDeleteArticle = async () => {
     try {
-      const { data } = await createLike({
+      const { data } = await deleteArticle({
         variables: { id: parseInt(id || '') },
       })
-      if (data?.createLike) {
-        getLikesNbr.refetch()
+      console.log(data)
+      if (data?.removeArticle) {
+        navigate('/')
       }
     } catch (err) {
-      console.error('Error posting article:', err)
+      console.error('Error delete article:', err)
     }
   }
 
@@ -75,7 +130,7 @@ const ArticlePage = () => {
                   <Icon name="write" color="#242424" />
                   <span>Modifier</span>
                 </Button>
-                <Button widthAuto underline>
+                <Button widthAuto underline onClick={handleDeleteArticle}>
                   <Icon name="trash" color="#242424" />
                   <span>Supprimer</span>
                 </Button>
@@ -114,7 +169,10 @@ const ArticlePage = () => {
             </div>
 
             <div className={styles.misc}>
-              <div onClick={handleClickStateLike}>
+              <div
+                className={userHasLikedArticle ? styles.article_liked : ''}
+                onClick={handleClickStateLike}
+              >
                 <Icon name="clap" color="#6B6B6B" />
                 <span>{nbrLikes}</span>
               </div>

@@ -16,6 +16,7 @@ import {
   SortOrder,
   useGetArticlesQuery,
 } from '../../generated/graphql'
+import { useNavigate } from 'react-router-dom'
 
 export type filterProps = {
   'date-order': string
@@ -23,6 +24,8 @@ export type filterProps = {
 }
 
 const Home = () => {
+  const navigate = useNavigate()
+
   const [articles, setArticles] = useState<Article[]>([])
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [filter, setFilter] = useState<filterProps>({
@@ -72,6 +75,11 @@ const Home = () => {
     })
   }
 
+  const shuffleArticle = () => {
+    const randomIndex = Math.floor(Math.random() * articles.length)
+    navigate(`/article/${articles[randomIndex].id}`)
+  }
+
   return (
     <div className={styles.home}>
       <Navbar />
@@ -82,7 +90,7 @@ const Home = () => {
           <p>
             Discover stories, thinking, and expertise from writers on any topic.
           </p>
-          <Button>Start reading</Button>
+          <Button onClick={shuffleArticle}>Start reading</Button>
         </div>
         <HeaderAnimationLetter className={styles.animationHeader} />
       </div>
