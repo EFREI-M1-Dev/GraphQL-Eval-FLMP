@@ -61,6 +61,8 @@ export interface IQuery {
     article(id: number): Nullable<Article> | Promise<Nullable<Article>>;
     getArticleLikesCount(id: number): number | Promise<number>;
     hasUserLikedArticle(id: number): boolean | Promise<boolean>;
+    comments(): Nullable<Comment>[] | Promise<Nullable<Comment>[]>;
+    comment(id: number): Nullable<Comment> | Promise<Nullable<Comment>>;
     likes(): Nullable<Like>[] | Promise<Nullable<Like>[]>;
     like(id: number): Nullable<Like> | Promise<Nullable<Like>>;
     users(): Nullable<User>[] | Promise<Nullable<User>[]>;
@@ -73,6 +75,8 @@ export interface IMutation {
     removeArticle(id: number): Nullable<Article> | Promise<Nullable<Article>>;
     login(loginUserInput: LoginUserInput): LoginResponse | Promise<LoginResponse>;
     signup(loginUserInput: LoginUserInput): User | Promise<User>;
+    createComment(articleId: number, text: string): Comment | Promise<Comment>;
+    removeComment(id: number): Nullable<Comment> | Promise<Nullable<Comment>>;
     createLike(articleId: number): Like | Promise<Like>;
     removeLike(articleId: number): Nullable<Like> | Promise<Nullable<Like>>;
     createUser(createUserInput: CreateUserInput): User | Promise<User>;
@@ -81,6 +85,13 @@ export interface IMutation {
 export interface LoginResponse {
     user: User;
     token: string;
+}
+
+export interface Comment {
+    id: number;
+    author: User;
+    article: Article;
+    text: string;
 }
 
 export interface Like {

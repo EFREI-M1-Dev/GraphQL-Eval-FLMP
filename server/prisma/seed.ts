@@ -205,6 +205,18 @@ async function main() {
     },
   });
 
+  await prisma.comment.create({
+    data: {
+      text: 'Great article!',
+      author: {
+        connect: { id: user1.id },
+      },
+      article: {
+        connect: { id: article2.id },
+      },
+    },
+  });
+
   console.log('Users, articles and likes created successfully.');
 }
 
