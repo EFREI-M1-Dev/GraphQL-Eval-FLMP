@@ -9,6 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaService } from './prisma/prisma.service';
 import { LikesModule } from './likes/likes.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
     UsersModule,
     AuthModule,
     LikesModule,
+    CommentsModule,
   ],
   controllers: [],
   providers: [PrismaService],

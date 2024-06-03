@@ -14,6 +14,7 @@ model User {
   avatar    String
   articles  Article[]
   likes     Like[]
+  comments Comment[]
 }
 
 model Article {
@@ -25,6 +26,16 @@ model Article {
   author    User      @relation(fields: [authorId], references: [id])
   authorId  Int
   likes     Like[]
+  comments Comment[]
+}
+
+model Comment {
+  id        Int     @id @default(autoincrement())
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+  article   Article @relation(fields: [articleId], references: [id])
+  articleId Int
+  text   String
 }
 
 model Like {
