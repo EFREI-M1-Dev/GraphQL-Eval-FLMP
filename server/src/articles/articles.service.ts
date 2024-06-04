@@ -111,6 +111,10 @@ export class ArticlesService {
       where: { articleId: id },
     });
 
+    await this.prisma.comment.deleteMany({
+      where: { articleId: id },
+    });
+
     return this.prisma.article.delete({
       where: { id: id },
     });
