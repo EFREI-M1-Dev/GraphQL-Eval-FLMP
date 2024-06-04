@@ -125,11 +125,7 @@ const ArticlePage = () => {
     navigate(`/edit-story/${id}`)
   }
 
-  const listComments = article?.comments?.map((comment) => (
-    <li>
-      {comment.text} - {comment.author.username}
-    </li>
-  ))
+  const listComments = article?.comments;
 
   return (
     <div>
@@ -202,7 +198,40 @@ const ArticlePage = () => {
 
             <div className={styles.content}>{article?.content}</div>
 
-            <ul>{listComments}</ul>
+            <div className={styles.comments}>
+
+              <div className={styles.comments__head}>
+                <h2>Comments</h2>
+
+                <Button widthAuto outline>
+                  <Icon name="write" color="#242424" />
+                  <span>Add comment</span>
+                </Button>
+              </div>
+
+              <div className={styles.comments__content}>
+                {listComments && listComments?.length > 0 ? (
+                    listComments?.map((comment, index) => (
+                        <div key={index} className={styles.comments__item}>
+                          <img
+                              src={
+                                  comment?.author?.avatar ||
+                                  'http://localhost:3000/static/avatar-1.png'
+                              }
+                              alt={article?.author?.username + "'s Logo"}
+                          />
+                          <div>
+                            <p>{comment.author?.username}</p>
+                            <p>{comment.text}</p>
+                          </div>
+                          <p>{moment(comment.createdAt).format('MMMM D YYYY - hh:mm')}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p className={styles.comments__none}>No comments on this article.</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

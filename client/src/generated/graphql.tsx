@@ -46,6 +46,7 @@ export type Comment = {
   __typename?: 'Comment';
   article: Article;
   author: User;
+  createdAt?: Maybe<Scalars['Timestamp']['output']>;
   id: Scalars['Int']['output'];
   text: Scalars['String']['output'];
 };
@@ -149,6 +150,7 @@ export type Query = {
   articles: Array<Maybe<Article>>;
   comment?: Maybe<Comment>;
   comments: Array<Maybe<Comment>>;
+  getArticleCommentsCount: Scalars['Int']['output'];
   getArticleLikesCount: Scalars['Int']['output'];
   hasUserLikedArticle: Scalars['Boolean']['output'];
   like?: Maybe<Like>;
@@ -170,6 +172,11 @@ export type QueryArticlesArgs = {
 
 
 export type QueryCommentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
+export type QueryGetArticleCommentsCountArgs = {
   id: Scalars['Int']['input'];
 };
 
@@ -209,6 +216,7 @@ export type User = {
   articles?: Maybe<Array<Article>>;
   avatar?: Maybe<Scalars['String']['output']>;
   comments?: Maybe<Array<Comment>>;
+  createdAt?: Maybe<Scalars['Timestamp']['output']>;
   id: Scalars['Int']['output'];
   likes?: Maybe<Array<Like>>;
   username?: Maybe<Scalars['String']['output']>;
@@ -233,7 +241,7 @@ export type GetArticleQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', text: string, author: { __typename?: 'User', username?: string | null } }> | null } | null };
+export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', text: string, createdAt?: any | null, author: { __typename?: 'User', avatar?: string | null, username?: string | null } }> | null } | null };
 
 export type GetHasUserLikedArticleQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -372,7 +380,9 @@ export const GetArticleDocument = gql`
     }
     comments {
       text
+      createdAt
       author {
+        avatar
         username
       }
     }
