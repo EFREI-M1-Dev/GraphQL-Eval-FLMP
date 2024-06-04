@@ -207,7 +207,7 @@ async function main() {
 
   await prisma.comment.create({
     data: {
-      text: 'Great article!',
+      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
       author: {
         connect: { id: user1.id },
       },
@@ -217,7 +217,67 @@ async function main() {
     },
   });
 
-  console.log('Users, articles and likes created successfully.');
+  await prisma.comment.create({
+    data: {
+      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      author: {
+        connect: { id: user1.id },
+      },
+      article: {
+        connect: { id: article3.id },
+      },
+    },
+  });
+
+  await prisma.comment.create({
+    data: {
+      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      author: {
+        connect: { id: user2.id },
+      },
+      article: {
+        connect: { id: article3.id },
+      },
+    },
+  });
+
+  await prisma.comment.create({
+    data: {
+      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      author: {
+        connect: { id: user2.id },
+      },
+      article: {
+        connect: { id: article4.id },
+      },
+    },
+  });
+
+  await prisma.comment.create({
+    data: {
+      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      author: {
+        connect: { id: user3.id },
+      },
+      article: {
+        connect: { id: article4.id },
+      },
+    },
+  });
+
+  await prisma.comment.create({
+    data: {
+      text: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+      author: {
+        connect: { id: user4.id },
+      },
+      article: {
+        connect: { id: article1.id },
+      },
+    },
+  });
+
+  console.log('Users, articles, comments and likes created successfully.');
 }
 
 main()
