@@ -14,8 +14,13 @@ import {
 import { useCreateArticleMutation } from '../../generated/graphql'
 import Textarea from '../../components/molecules/Textarea'
 
+/* provider */
+import { useNotification } from '../../providers/NotificationProvider'
+
 const NewStory = () => {
   const { id } = useParams()
+
+  const { showNotification } = useNotification()
 
   const [formValues, setFormValues] = useState<CreateArticleInput>({
     title: '',
@@ -61,7 +66,10 @@ const NewStory = () => {
       variables: { input: formValues },
     })
     if (data?.createArticle) {
+      showNotification("L'article a bien été crée.")
       navigate(`/article/${data.createArticle.id}`)
+    } else {
+      showNotification('Nous avons rencontré une erreur serveur')
     }
   }
 
@@ -73,14 +81,17 @@ const NewStory = () => {
     })
 
     if (data?.updateArticle) {
+      showNotification("L'article a bien été modifié.")
       navigate(`/article/${data.updateArticle.id}`)
+    } else {
+      showNotification('Nous avons rencontré une erreur serveur')
     }
   }
 
   const handleSubmit = async () => {
     try {
       if (!formValues.title || !formValues.content) {
-        // TODO: message error ?
+        showNotification('Des champs sont manquants.')
         return
       }
       if (id) {

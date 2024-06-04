@@ -21,9 +21,12 @@ import {
 
 /* hooks */
 import { decodedToken } from '../../hooks/decodedToken.tsx'
+import { useNotification } from '../../providers/NotificationProvider/index.tsx'
 
 const ArticlePage = () => {
   const { id } = useParams()
+  const { showNotification } = useNotification()
+
   const [nbrLikes, setNbrLikes] = useState<number | null>(null)
   const [userHasLikedArticle, setUserHasLikedArticle] = useState<
     boolean | null
@@ -72,17 +75,18 @@ const ArticlePage = () => {
   }, [getUserLiked.loading, getUserLiked.data])
 
   const handleClickStateLike = async () => {
-    console.log(userHasLikedArticle)
     if (userHasLikedArticle) {
       try {
         const { data } = await deleteLike({
           variables: { id: parseInt(id || '') },
         })
         if (data?.removeLike) {
+          showNotification('Le like a bien été supprimé')
           getLikesNbr.refetch()
           getUserLiked.refetch()
         }
       } catch (err) {
+        showNotification('Nous avons rencontré une erreur serveur: ' + err)
         console.error('Error liked article:', err)
       }
     } else {
@@ -91,10 +95,12 @@ const ArticlePage = () => {
           variables: { id: parseInt(id || '') },
         })
         if (data?.createLike) {
+          showNotification('Le like a bien été ajouté')
           getLikesNbr.refetch()
           getUserLiked.refetch()
         }
       } catch (err) {
+        showNotification('Nous avons rencontré une erreur serveur: ' + err)
         console.error('Error liked article:', err)
       }
     }
@@ -105,11 +111,12 @@ const ArticlePage = () => {
       const { data } = await deleteArticle({
         variables: { id: parseInt(id || '') },
       })
-      console.log(data)
       if (data?.removeArticle) {
+        showNotification("L'article a bien été supprimé")
         navigate('/')
       }
     } catch (err) {
+      showNotification('Nous avons rencontré une erreur serveur: ' + err)
       console.error('Error delete article:', err)
     }
   }
