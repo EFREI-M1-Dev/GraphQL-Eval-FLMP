@@ -43,6 +43,7 @@ type Query {
   articles(filter: ArticleFilterInput, sort: ArticleSortInput): [Article]!
   article(id: Int!): Article
   getArticleLikesCount(id: Int!): Int!
+  getArticleCommentsCount(id: Int!): Int!
   hasUserLikedArticle(id: Int!): Boolean!
 }
 

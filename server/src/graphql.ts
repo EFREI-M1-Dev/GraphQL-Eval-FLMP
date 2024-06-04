@@ -61,6 +61,7 @@ export interface IQuery {
     articles(filter?: Nullable<ArticleFilterInput>, sort?: Nullable<ArticleSortInput>): Nullable<Article>[] | Promise<Nullable<Article>[]>;
     article(id: number): Nullable<Article> | Promise<Nullable<Article>>;
     getArticleLikesCount(id: number): number | Promise<number>;
+    getArticleCommentsCount(id: number): number | Promise<number>;
     hasUserLikedArticle(id: number): boolean | Promise<boolean>;
     comments(): Nullable<Comment>[] | Promise<Nullable<Comment>[]>;
     comment(id: number): Nullable<Comment> | Promise<Nullable<Comment>>;
@@ -107,6 +108,7 @@ export interface User {
     avatar?: Nullable<string>;
     articles?: Nullable<Article[]>;
     likes?: Nullable<Like[]>;
+    comments?: Nullable<Comment[]>;
 }
 
 export type Timestamp = any;

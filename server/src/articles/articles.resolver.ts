@@ -66,6 +66,11 @@ export class ArticlesResolver {
     return this.articlesService.getArticleLikesCount(id);
   }
 
+  @Query('getArticleCommentsCount')
+  getArticleCommentsCount(@Args('id') id: number) {
+    return this.articlesService.getArticleCommentsCount(id);
+  }
+
   @Query('hasUserLikedArticle')
   @UseGuards(JwtAuthGuard)
   hasUserLikedArticle(

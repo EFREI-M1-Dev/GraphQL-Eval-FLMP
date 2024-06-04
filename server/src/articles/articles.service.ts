@@ -79,6 +79,14 @@ export class ArticlesService {
     });
   }
 
+  getArticleCommentsCount(id: number) {
+    return this.prisma.comment.count({
+      where: {
+        articleId: id,
+      },
+    });
+  }
+
   async hasUserLikedArticle(articleId: number, userId: number) {
     const like = await this.prisma.like.findUnique({
       where: {
