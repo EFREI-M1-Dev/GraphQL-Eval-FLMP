@@ -92,6 +92,7 @@ export interface LoginResponse {
 export interface Comment {
     id: number;
     text: string;
+    createdAt?: Nullable<Timestamp>;
     author: User;
     article: Article;
 }
@@ -106,6 +107,7 @@ export interface User {
     id: number;
     username?: Nullable<string>;
     avatar?: Nullable<string>;
+    createdAt?: Nullable<Timestamp>;
     articles?: Nullable<Article[]>;
     likes?: Nullable<Like[]>;
     comments?: Nullable<Comment[]>;

@@ -1,6 +1,7 @@
 type Comment {
   id: Int!
   text: String!
+  createdAt: Timestamp
   author: User!
   article: Article!
 }

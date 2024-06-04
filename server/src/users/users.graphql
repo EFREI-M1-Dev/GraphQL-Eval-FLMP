@@ -2,6 +2,7 @@ type User {
   id: Int!
   username: String
   avatar: String
+  createdAt: Timestamp
   articles: [Article!]
   likes: [Like!]
   comments: [Comment!]
