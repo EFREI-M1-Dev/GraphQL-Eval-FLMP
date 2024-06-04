@@ -6,12 +6,23 @@ type Comment {
   article: Article!
 }
 
+input CreateCommentInput {
+  articleId: Int!
+  text: String!
+}
+
+input UpdateCommentInput {
+  id: Int!
+  text: String!
+}
+
 type Query {
   comments: [Comment]!
   comment(id: Int!): Comment
 }
 
 type Mutation {
-  createComment(articleId: Int!, text: String!): Comment!
+  createComment(createCommentInput: CreateCommentInput!): Comment!
+  updateComment(updateCommentInput: UpdateArticleInput!): Comment!
   removeComment(id: Int!): Comment
 }

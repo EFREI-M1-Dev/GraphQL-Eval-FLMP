@@ -10,6 +10,8 @@ import {
 import { CommentsService } from './comments.service';
 import { GraphQLContext } from 'src/interfaces/graphql-context.interface';
 import { Comment } from '@prisma/client';
+import { CreateCommentInput } from './dto/create-comment.input';
+import { UpdateCommentInput } from './dto/update-comment.input';
 
 @Resolver('Comment')
 export class CommentsResolver {
@@ -27,13 +29,11 @@ export class CommentsResolver {
 
   @Mutation('createComment')
   create(
+    @Args('CreateCommentInput') createCommentInput: CreateCommentInput,
     @Context() context: GraphQLContext,
-    @Args('articleId') articleId: number,
-    @Args('text') text: string,
   ) {
     return this.commentsService.create(
-      articleId,
-      text,
+      createCommentInput,
       context.req.user.userId,
     );
   }
@@ -46,6 +46,11 @@ export class CommentsResolver {
   @Query('comment')
   findOne(@Args('id') id: number) {
     return this.commentsService.findOne(id);
+  }
+
+  @Mutation('updateComment')
+  update(@Args('UpdateCommentInput') updateCommentInput: UpdateCommentInput) {
+    return this.commentsService.update(updateCommentInput);
   }
 
   @Mutation('removeComment')

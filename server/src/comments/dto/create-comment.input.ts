@@ -1,1 +1,4 @@
-export class CreateCommentInput {}
+export class CreateCommentInput {
+  articleId: number;
+  text: string;
+}

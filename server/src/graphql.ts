@@ -41,6 +41,16 @@ export interface LoginUserInput {
     password: string;
 }
 
+export interface CreateCommentInput {
+    articleId: number;
+    text: string;
+}
+
+export interface UpdateCommentInput {
+    id: number;
+    text: string;
+}
+
 export interface CreateUserInput {
     username?: Nullable<string>;
     password?: Nullable<string>;
@@ -77,7 +87,8 @@ export interface IMutation {
     removeArticle(id: number): Nullable<Article> | Promise<Nullable<Article>>;
     login(loginUserInput: LoginUserInput): LoginResponse | Promise<LoginResponse>;
     signup(loginUserInput: LoginUserInput): User | Promise<User>;
-    createComment(articleId: number, text: string): Comment | Promise<Comment>;
+    createComment(createCommentInput: CreateCommentInput): Comment | Promise<Comment>;
+    updateComment(updateCommentInput: UpdateArticleInput): Comment | Promise<Comment>;
     removeComment(id: number): Nullable<Comment> | Promise<Nullable<Comment>>;
     createLike(articleId: number): Like | Promise<Like>;
     removeLike(articleId: number): Nullable<Like> | Promise<Nullable<Like>>;
