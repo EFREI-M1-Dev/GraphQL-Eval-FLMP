@@ -114,6 +114,10 @@ const ArticlePage = () => {
     }
   }
 
+  const handleEditArticle = () => {
+    navigate(`/edit-story/${id}`)
+  }
+
   const listComments = article?.comments?.map((comment) => (
     <li>
       {comment.text} - {comment.author.username}
@@ -132,7 +136,7 @@ const ArticlePage = () => {
             <div className={styles.userlogged__bar}>
               <p>Vous êtes l'auteur de cet article, vous pouvez :</p>
               <div className={styles.userlogged}>
-                <Button widthAuto underline>
+                <Button widthAuto underline onClick={handleEditArticle}>
                   <Icon name="write" color="#242424" />
                   <span>Modifier</span>
                 </Button>
