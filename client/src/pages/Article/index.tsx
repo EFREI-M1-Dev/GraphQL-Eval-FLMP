@@ -81,12 +81,12 @@ const ArticlePage = () => {
           variables: { id: parseInt(id || '') },
         })
         if (data?.removeLike) {
-          showNotification('Le like a bien été supprimé')
+          showNotification('The like has been removed.')
           getLikesNbr.refetch()
           getUserLiked.refetch()
         }
       } catch (err) {
-        showNotification('Nous avons rencontré une erreur serveur: ' + err)
+        showNotification('We encountered a server error: ' + err)
         console.error('Error liked article:', err)
       }
     } else {
@@ -95,12 +95,12 @@ const ArticlePage = () => {
           variables: { id: parseInt(id || '') },
         })
         if (data?.createLike) {
-          showNotification('Le like a bien été ajouté')
+          showNotification('The like has been added.')
           getLikesNbr.refetch()
           getUserLiked.refetch()
         }
       } catch (err) {
-        showNotification('Nous avons rencontré une erreur serveur: ' + err)
+        showNotification('We encountered a server error: ' + err)
         console.error('Error liked article:', err)
       }
     }
@@ -112,11 +112,11 @@ const ArticlePage = () => {
         variables: { id: parseInt(id || '') },
       })
       if (data?.removeArticle) {
-        showNotification("L'article a bien été supprimé")
+        showNotification('The article has been deleted.')
         navigate('/')
       }
     } catch (err) {
-      showNotification('Nous avons rencontré une erreur serveur: ' + err)
+      showNotification('We encountered a server error: ' + err)
       console.error('Error delete article:', err)
     }
   }

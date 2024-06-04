@@ -66,10 +66,10 @@ const NewStory = () => {
       variables: { input: formValues },
     })
     if (data?.createArticle) {
-      showNotification("L'article a bien été crée.")
+      showNotification('The article has been created.')
       navigate(`/article/${data.createArticle.id}`)
     } else {
-      showNotification('Nous avons rencontré une erreur serveur')
+      showNotification('We encountered a server error')
     }
   }
 
@@ -81,17 +81,17 @@ const NewStory = () => {
     })
 
     if (data?.updateArticle) {
-      showNotification("L'article a bien été modifié.")
+      showNotification('The article has been updated.')
       navigate(`/article/${data.updateArticle.id}`)
     } else {
-      showNotification('Nous avons rencontré une erreur serveur')
+      showNotification('We encountered a server error')
     }
   }
 
   const handleSubmit = async () => {
     try {
       if (!formValues.title || !formValues.content) {
-        showNotification('Des champs sont manquants.')
+        showNotification('Some fields are missings.')
         return
       }
       if (id) {
