@@ -275,7 +275,7 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, likes?: Array<{ __typename?: 'Like', id: number }> | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null } | null> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, likes?: Array<{ __typename?: 'Like', id: number }> | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', id: number }> | null } | null> };
 
 export type LoginMutationVariables = Exact<{
   input: LoginUserInput;
@@ -605,6 +605,9 @@ export const GetArticlesDocument = gql`
     author {
       username
       avatar
+    }
+    comments {
+      id
     }
   }
 }

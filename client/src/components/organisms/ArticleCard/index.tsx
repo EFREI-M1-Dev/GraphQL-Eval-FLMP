@@ -15,7 +15,8 @@ interface ArticleCardProps {
 const ArticleCard = ({ article }: ArticleCardProps) => {
   const navigate = useNavigate()
 
-  const { id, image, author, title, content, createdAt, likes } = article
+  const { id, image, author, title, content, createdAt, likes, comments } =
+    article
 
   return (
     <div
@@ -43,7 +44,7 @@ const ArticleCard = ({ article }: ArticleCardProps) => {
           </li>
           <li>
             <Icon name="chat_bubble" color="#6B6B6B" />
-            <span>4</span>
+            <span>{comments?.length}</span>
           </li>
         </ul>
         <Icon name="save" color="#6B6B6B" />

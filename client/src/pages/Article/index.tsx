@@ -189,7 +189,7 @@ const ArticlePage = () => {
 
               <div>
                 <Icon name="chat_bubble" color="#6B6B6B" />
-                <span>4</span>
+                <span>{article?.comments?.length}</span>
               </div>
             </div>
 

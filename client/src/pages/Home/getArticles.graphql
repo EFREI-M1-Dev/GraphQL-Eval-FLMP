@@ -12,5 +12,8 @@ query GetArticles($sort: ArticleSortInput!) {
       username
       avatar
     }
+    comments {
+      id
+    }
   }
 }
