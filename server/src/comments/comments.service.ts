@@ -1,24 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import {PrismaService} from "../prisma/prisma.service";
-import { Article, User } from 'src/graphql';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class CommentsService {
-
   constructor(private prisma: PrismaService) {}
   async create(articleId: number, text: string, authorId: number) {
-
-    const user = await this.prisma.user.findUnique({where: {id: authorId}});
-    if(user === null) {
+    const user = await this.prisma.user.findUnique({ where: { id: authorId } });
+    if (user === null) {
       throw new Error('Author not found');
     }
 
-    const article = await this.prisma.article.findUnique({where: {id: articleId}});
-    if(article === null) {
+    const article = await this.prisma.article.findUnique({
+      where: { id: articleId },
+    });
+    if (article === null) {
       throw new Error('Article not found');
     }
 
-    if(text.length < 1) {
+    if (text.length < 1) {
       throw new Error('Text is too short');
     }
 
@@ -26,7 +25,8 @@ export class CommentsService {
       data: {
         authorId: authorId,
         articleId: articleId,
-        text: text },
+        text: text,
+      },
     });
   }
 
@@ -35,7 +35,7 @@ export class CommentsService {
   }
 
   findOne(id: number) {
-    return this.prisma.comment.findUnique({where: {id: id}});
+    return this.prisma.comment.findUnique({ where: { id: id } });
   }
 
   // update(id: number, updateCommentInput: UpdateCommentInput) {
@@ -43,6 +43,6 @@ export class CommentsService {
   // }
 
   remove(id: number) {
-    return this.prisma.comment.delete({where: {id: id}});
+    return this.prisma.comment.delete({ where: { id: id } });
   }
 }

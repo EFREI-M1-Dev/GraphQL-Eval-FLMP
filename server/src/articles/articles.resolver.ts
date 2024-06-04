@@ -43,6 +43,11 @@ export class ArticlesResolver {
     return this.articlesService.findOne(articles.id).likes();
   }
 
+  @ResolveField()
+  comments(@Root() articles: Article) {
+    return this.articlesService.findOne(articles.id).comments();
+  }
+
   @Query('articles')
   findAll(
     @Args('filter', { nullable: true }) filter?: ArticleFilterInput,

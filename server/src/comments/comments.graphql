@@ -1,8 +1,8 @@
 type Comment {
   id: Int!
+  text: String!
   author: User!
   article: Article!
-  text: String!
 }
 
 type Query {

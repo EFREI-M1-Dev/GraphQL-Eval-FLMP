@@ -1,18 +1,41 @@
-import { Resolver, Query, Mutation, Args, Root, Context, ResolveField } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Root,
+  Context,
+  ResolveField,
+} from '@nestjs/graphql';
 import { CommentsService } from './comments.service';
-import { Article, User } from 'src/graphql';
 import { GraphQLContext } from 'src/interfaces/graphql-context.interface';
+import { Comment } from '@prisma/client';
 
 @Resolver('Comment')
 export class CommentsResolver {
   constructor(private readonly commentsService: CommentsService) {}
 
+  @ResolveField()
+  author(@Root() comments: Comment) {
+    return this.commentsService.findOne(comments.id).author();
+  }
+
+  @ResolveField()
+  article(@Root() comments: Comment) {
+    return this.commentsService.findOne(comments.id).article();
+  }
+
   @Mutation('createComment')
   create(
     @Context() context: GraphQLContext,
-    @Args('articleId')articleId: number,
-    @Args('text')text: string) {
-    return this.commentsService.create(articleId, text, context.req.user.userId);
+    @Args('articleId') articleId: number,
+    @Args('text') text: string,
+  ) {
+    return this.commentsService.create(
+      articleId,
+      text,
+      context.req.user.userId,
+    );
   }
 
   @Query('comments')

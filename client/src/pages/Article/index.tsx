@@ -114,6 +114,12 @@ const ArticlePage = () => {
     }
   }
 
+  const listComments = article?.comments?.map((comment) => (
+    <li>
+      {comment.text} - {comment.author.username}
+    </li>
+  ))
+
   return (
     <div>
       <Navbar />
@@ -184,6 +190,8 @@ const ArticlePage = () => {
             </div>
 
             <div className={styles.content}>{article?.content}</div>
+
+            <ul>{listComments}</ul>
           </div>
         </div>
       </div>

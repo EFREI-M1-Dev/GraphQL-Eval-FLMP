@@ -21,6 +21,7 @@ export type Scalars = {
 export type Article = {
   __typename?: 'Article';
   author?: Maybe<User>;
+  comments?: Maybe<Array<Comment>>;
   content?: Maybe<Scalars['String']['output']>;
   createdAt?: Maybe<Scalars['Timestamp']['output']>;
   id: Scalars['Int']['output'];
@@ -39,6 +40,14 @@ export type ArticleFilterInput = {
 export type ArticleSortInput = {
   createdAt?: InputMaybe<SortOrder>;
   likes?: InputMaybe<SortOrder>;
+};
+
+export type Comment = {
+  __typename?: 'Comment';
+  article: Article;
+  author: User;
+  id: Scalars['Int']['output'];
+  text: Scalars['String']['output'];
 };
 
 export type CreateArticleInput = {
@@ -72,10 +81,12 @@ export type LoginUserInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   createArticle: Article;
+  createComment: Comment;
   createLike: Like;
   createUser: User;
   login: LoginResponse;
   removeArticle?: Maybe<Article>;
+  removeComment?: Maybe<Comment>;
   removeLike?: Maybe<Like>;
   signup: User;
   updateArticle: Article;
@@ -84,6 +95,12 @@ export type Mutation = {
 
 export type MutationCreateArticleArgs = {
   createArticleInput: CreateArticleInput;
+};
+
+
+export type MutationCreateCommentArgs = {
+  articleId: Scalars['Int']['input'];
+  text: Scalars['String']['input'];
 };
 
 
@@ -107,6 +124,11 @@ export type MutationRemoveArticleArgs = {
 };
 
 
+export type MutationRemoveCommentArgs = {
+  id: Scalars['Int']['input'];
+};
+
+
 export type MutationRemoveLikeArgs = {
   articleId: Scalars['Int']['input'];
 };
@@ -125,6 +147,8 @@ export type Query = {
   __typename?: 'Query';
   article?: Maybe<Article>;
   articles: Array<Maybe<Article>>;
+  comment?: Maybe<Comment>;
+  comments: Array<Maybe<Comment>>;
   getArticleLikesCount: Scalars['Int']['output'];
   hasUserLikedArticle: Scalars['Boolean']['output'];
   like?: Maybe<Like>;
@@ -142,6 +166,11 @@ export type QueryArticleArgs = {
 export type QueryArticlesArgs = {
   filter?: InputMaybe<ArticleFilterInput>;
   sort?: InputMaybe<ArticleSortInput>;
+};
+
+
+export type QueryCommentArgs = {
+  id: Scalars['Int']['input'];
 };
 
 
@@ -203,7 +232,7 @@ export type GetArticleQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null } | null };
+export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', text: string, author: { __typename?: 'User', username?: string | null } }> | null } | null };
 
 export type GetHasUserLikedArticleQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -332,6 +361,12 @@ export const GetArticleDocument = gql`
       id
       username
       avatar
+    }
+    comments {
+      text
+      author {
+        username
+      }
     }
   }
 }

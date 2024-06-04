@@ -6,6 +6,7 @@ type Article {
   createdAt: Timestamp
   author: User
   likes: [Like!]
+  comments: [Comment!]
 }
 
 scalar Timestamp

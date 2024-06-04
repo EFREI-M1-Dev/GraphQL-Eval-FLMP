@@ -18,6 +18,11 @@ export class UsersResolver {
     return this.usersService.findOne(user.username).likes();
   }
 
+  @ResolveField()
+  comments(@Root() user: User) {
+    return this.usersService.findOne(user.username).comments();
+  }
+
   @Query('users')
   @UseGuards(JwtAuthGuard)
   findAll() {

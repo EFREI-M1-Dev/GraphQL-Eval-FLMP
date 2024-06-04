@@ -4,6 +4,7 @@ type User {
   avatar: String
   articles: [Article!]
   likes: [Like!]
+  comments: [Comment!]
 }
 
 input CreateUserInput {

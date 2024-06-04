@@ -9,5 +9,11 @@ query GetArticle($id: Int!) {
       username
       avatar
     }
+    comments {
+      text
+      author {
+        username
+      }
+    }
   }
 }

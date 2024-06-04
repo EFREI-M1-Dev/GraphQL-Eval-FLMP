@@ -54,6 +54,7 @@ export interface Article {
     createdAt?: Nullable<Timestamp>;
     author?: Nullable<User>;
     likes?: Nullable<Like[]>;
+    comments?: Nullable<Comment[]>;
 }
 
 export interface IQuery {
@@ -89,9 +90,9 @@ export interface LoginResponse {
 
 export interface Comment {
     id: number;
+    text: string;
     author: User;
     article: Article;
-    text: string;
 }
 
 export interface Like {
