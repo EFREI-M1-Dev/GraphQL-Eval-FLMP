@@ -22,7 +22,7 @@ const Register = () => {
 
     try {
       if (!username || !password) {
-        setMsgError('Veuillez renseigner tous les champs')
+        setMsgError('You need to complete all fields')
         return
       }
 
@@ -32,11 +32,11 @@ const Register = () => {
       if (data?.signup.username) {
         navigate('/login')
       } else {
-        setMsgError("Une erreur est survenue lors de l'inscription")
+        setMsgError("A error occured, please try again later")
       }
     } catch (e) {
       console.error(e)
-      setMsgError('Une erreur est survenue')
+      setMsgError('An error occured')
     }
   }
 
@@ -54,21 +54,21 @@ const Register = () => {
   return (
     <AuthLayout>
       <div className={styles.auth__forms__box}>
-        <h2 className={styles.auth__forms__title}>Inscription</h2>
+        <h2 className={styles.auth__forms__title}>Sign up</h2>
         <div className={styles.auth__forms__content}>
           <form onSubmit={handleSubmit}>
             <div className={styles.auth__forms__content__input}>
-              <label htmlFor="username">Nom d&apos;utilisateur</label>
+              <label htmlFor="username">User name</label>
               <input
                 ref={usernameRef}
                 type="username"
                 id="username"
                 name="username"
-                placeholder="nom_utilisateur"
+                placeholder="username"
               />
             </div>
             <div className={styles.auth__forms__content__input}>
-              <label htmlFor="password">Mot de passe</label>
+              <label htmlFor="password">Password</label>
               <input
                 ref={passwdRef}
                 type="password"
@@ -82,11 +82,11 @@ const Register = () => {
             )}
             <div className={styles.auth__forms__infos}>
               <p>
-                Vous avez déjà un compte ?&nbsp;
-                <Link to="/login">Connectez-vous</Link>
+                Already have an account ?&nbsp;
+                <Link to="/login">Login</Link>
               </p>
             </div>
-            <Button>S&apos;enregistrer</Button>
+            <Button>Register</Button>
           </form>
         </div>
       </div>

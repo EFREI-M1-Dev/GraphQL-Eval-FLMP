@@ -55,27 +55,27 @@ const Login = () => {
   return (
     <AuthLayout>
       <div className={styles.auth__forms__box}>
-        <h2 className={styles.auth__forms__title}>Connexion</h2>
+        <h2 className={styles.auth__forms__title}>Sign in</h2>
         <div className={styles.auth__forms__content}>
           <form onSubmit={handleSubmit}>
             <div className={styles.auth__forms__content__input}>
-              <label htmlFor="username">Nom d&apos;utilisateur</label>
+              <label htmlFor="username">User name</label>
               <input
                 ref={usernameRef}
                 type="username"
                 id="username"
                 name="username"
-                placeholder="nom_utilisateur"
+                placeholder="username"
               />
             </div>
             <div className={styles.auth__forms__content__input}>
-              <label htmlFor="password">Mot de passe</label>
+              <label htmlFor="password">Password</label>
               <input
                 ref={passwordRef}
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Mot de passe"
+                placeholder="Password"
               />
             </div>
             {msgError && (
@@ -83,11 +83,11 @@ const Login = () => {
             )}
             <div className={styles.auth__forms__infos}>
               <p>
-                Vous n&apos;avez pas encore de compte ?&nbsp;
-                <Link to="/register">Inscrivez-vous</Link>
+                No account ?&nbsp;
+                <Link to="/register">Sign-up</Link>
               </p>
             </div>
-            <Button>Se connecter</Button>
+            <Button>LOGIN</Button>
           </form>
         </div>
       </div>
