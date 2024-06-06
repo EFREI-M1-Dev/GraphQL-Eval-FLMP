@@ -57,6 +57,12 @@ const router = createBrowserRouter([
       </RedirectIfNotLogged>
     ),
   },
+
+  /* not found */
+  {
+    path: '*',
+    element: <Home />,
+  },
 ])
 
 export default router

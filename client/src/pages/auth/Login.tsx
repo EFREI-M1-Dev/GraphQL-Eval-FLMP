@@ -21,7 +21,7 @@ const Login = () => {
     const password = passwordRef.current?.value
     try {
       if (!username || !password) {
-        setMsgError('Veuillez renseigner tous les champs')
+        setMsgError('You need to complete all fields')
         return
       }
 
@@ -32,12 +32,10 @@ const Login = () => {
         console.log(data)
         dispatch(setLoggedUser(data.login))
         navigate('/')
-      } else {
-        setMsgError("Le compte n'existe pas")
       }
     } catch (e) {
       console.error(e)
-      setMsgError('Une erreur est survenue')
+      setMsgError('An error occured')
     }
   }
 
@@ -48,7 +46,12 @@ const Login = () => {
     }
     if (error) {
       console.error('Error:', error)
-      setMsgError('Une erreur est survenue')
+
+      setMsgError('An error occured')
+
+      if (error.message === 'Unauthorized') {
+        setMsgError('Bad username or password !')
+      }
     }
   }, [data, loading, error])
 

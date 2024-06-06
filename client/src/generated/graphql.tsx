@@ -56,6 +56,11 @@ export type CreateArticleInput = {
   title: Scalars['String']['input'];
 };
 
+export type CreateCommentInput = {
+  articleId: Scalars['Int']['input'];
+  text: Scalars['String']['input'];
+};
+
 export type CreateUserInput = {
   password?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
@@ -91,6 +96,7 @@ export type Mutation = {
   removeLike?: Maybe<Like>;
   signup: User;
   updateArticle: Article;
+  updateComment: Comment;
 };
 
 
@@ -100,8 +106,7 @@ export type MutationCreateArticleArgs = {
 
 
 export type MutationCreateCommentArgs = {
-  articleId: Scalars['Int']['input'];
-  text: Scalars['String']['input'];
+  createCommentInput: CreateCommentInput;
 };
 
 
@@ -142,6 +147,11 @@ export type MutationSignupArgs = {
 
 export type MutationUpdateArticleArgs = {
   updateArticleInput: UpdateArticleInput;
+};
+
+
+export type MutationUpdateCommentArgs = {
+  updateCommentInput: UpdateArticleInput;
 };
 
 export type Query = {
@@ -209,6 +219,11 @@ export type UpdateArticleInput = {
   content: Scalars['String']['input'];
   id: Scalars['Int']['input'];
   title: Scalars['String']['input'];
+};
+
+export type UpdateCommentInput = {
+  id: Scalars['Int']['input'];
+  text: Scalars['String']['input'];
 };
 
 export type User = {

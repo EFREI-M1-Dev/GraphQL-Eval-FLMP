@@ -49,6 +49,10 @@ const ArticlePage = () => {
   }, [])
 
   useEffect(() => {
+    if (data?.article === null) {
+      navigate('/')
+    }
+    
     if (data) {
       setArticle(data?.article as Article)
     }

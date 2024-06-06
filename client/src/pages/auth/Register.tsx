@@ -32,7 +32,7 @@ const Register = () => {
       if (data?.signup.username) {
         navigate('/login')
       } else {
-        setMsgError("A error occured, please try again later")
+        setMsgError("An error occured, please try again later")
       }
     } catch (e) {
       console.error(e)
@@ -47,7 +47,7 @@ const Register = () => {
     }
     if (error) {
       console.error('Error:', error)
-      setMsgError('Une erreur est survenue')
+      setMsgError('An error occured')
     }
   }, [data, loading, error])
 
