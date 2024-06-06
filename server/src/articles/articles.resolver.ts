@@ -21,18 +21,6 @@ import { ArticleFilterInput } from './dto/filter-article-input';
 export class ArticlesResolver {
   constructor(private readonly articlesService: ArticlesService) {}
 
-  @Mutation('createArticle')
-  @UseGuards(JwtAuthGuard)
-  create(
-    @Args('createArticleInput') createArticleInput: CreateArticleInput,
-    @Context() context: GraphQLContext,
-  ) {
-    return this.articlesService.create(
-      createArticleInput,
-      context.req.user.username,
-    );
-  }
-
   @ResolveField()
   author(@Root() articles: Article) {
     return this.articlesService.findOne(articles.id).author();
@@ -46,6 +34,18 @@ export class ArticlesResolver {
   @ResolveField()
   comments(@Root() articles: Article) {
     return this.articlesService.findOne(articles.id).comments();
+  }
+
+  @Mutation('createArticle')
+  @UseGuards(JwtAuthGuard)
+  create(
+    @Args('createArticleInput') createArticleInput: CreateArticleInput,
+    @Context() context: GraphQLContext,
+  ) {
+    return this.articlesService.create(
+      createArticleInput,
+      context.req.user.username,
+    );
   }
 
   @Query('articles')
@@ -84,15 +84,21 @@ export class ArticlesResolver {
   }
 
   @Mutation('updateArticle')
-  update(@Args('updateArticleInput') updateArticleInput: UpdateArticleInput) {
+  @UseGuards(JwtAuthGuard)
+  update(
+    @Args('updateArticleInput') updateArticleInput: UpdateArticleInput,
+    @Context() context: GraphQLContext,
+  ) {
     return this.articlesService.update(
       updateArticleInput.id,
       updateArticleInput,
+      context.req.user.username,
     );
   }
 
   @Mutation('removeArticle')
-  remove(@Args('id') id: number) {
-    return this.articlesService.remove(id);
+  @UseGuards(JwtAuthGuard)
+  remove(@Args('id') id: number, @Context() context: GraphQLContext) {
+    return this.articlesService.remove(id, context.req.user.username);
   }
 }

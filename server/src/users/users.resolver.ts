@@ -1,7 +1,5 @@
 import { Resolver, Query, Args, Root, ResolveField } from '@nestjs/graphql';
 import { UsersService } from './users.service';
-import { UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from '@prisma/client';
 
 @Resolver('User')
@@ -24,7 +22,6 @@ export class UsersResolver {
   }
 
   @Query('users')
-  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.usersService.findAll();
   }

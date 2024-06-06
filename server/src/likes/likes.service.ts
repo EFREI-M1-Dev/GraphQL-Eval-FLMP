@@ -9,15 +9,17 @@ export class LikesService {
     const article = await this.prisma.article.findUnique({
       where: { id: articleId },
     });
+
     if (!article) {
-      throw new NotFoundException(`Article with ID ${articleId} not found`);
+      throw new NotFoundException(`Article not found`);
     }
 
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
     });
+
     if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
+      throw new NotFoundException(`User not found`);
     }
 
     return this.prisma.like.create({

@@ -1,4 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCommentInput } from './dto/create-comment.input';
 import { UpdateCommentInput } from './dto/update-comment.input';
@@ -6,21 +11,24 @@ import { UpdateCommentInput } from './dto/update-comment.input';
 @Injectable()
 export class CommentsService {
   constructor(private prisma: PrismaService) {}
+
   async create(createCommentInput: CreateCommentInput, authorId: number) {
     const user = await this.prisma.user.findUnique({ where: { id: authorId } });
-    if (user === null) {
-      throw new Error('Author not found');
+
+    if (!user) {
+      throw new NotFoundException('Author not found');
     }
 
     const article = await this.prisma.article.findUnique({
       where: { id: createCommentInput.articleId },
     });
-    if (article === null) {
-      throw new Error('Article not found');
+
+    if (!article) {
+      throw new NotFoundException('Article not found');
     }
 
     if (createCommentInput.text.length < 1) {
-      throw new Error('Text is too short');
+      throw new BadRequestException('Text is too short');
     }
 
     return this.prisma.comment.create({
@@ -40,14 +48,44 @@ export class CommentsService {
     return this.prisma.comment.findUnique({ where: { id: id } });
   }
 
-  update(updateCommentInput: UpdateCommentInput) {
+  async update(updateCommentInput: UpdateCommentInput, username: string) {
+    const comment = await this.prisma.comment.findUnique({
+      where: { id: updateCommentInput.id },
+      include: { author: true },
+    });
+
+    if (!comment) {
+      throw new NotFoundException('Comment not found');
+    }
+
+    if (comment.author.username !== username) {
+      throw new UnauthorizedException(
+        'You do not have permission to update this comment',
+      );
+    }
+
     return this.prisma.comment.update({
       where: { id: updateCommentInput.id },
       data: { text: updateCommentInput.text },
     });
   }
 
-  remove(id: number) {
+  async remove(id: number, username: string) {
+    const comment = await this.prisma.comment.findUnique({
+      where: { id },
+      include: { author: true },
+    });
+
+    if (!comment) {
+      throw new NotFoundException('Comment not found');
+    }
+
+    if (comment.author.username !== username) {
+      throw new UnauthorizedException(
+        'You do not have permission to remove this comment',
+      );
+    }
+
     return this.prisma.comment.delete({ where: { id: id } });
   }
 }

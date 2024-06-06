@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateArticleInput } from './dto/create-article.input';
 import { UpdateArticleInput } from './dto/update-article.input';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -99,14 +103,48 @@ export class ArticlesService {
     return like !== null;
   }
 
-  update(id: number, updateArticleInput: UpdateArticleInput) {
+  async update(
+    id: number,
+    updateArticleInput: UpdateArticleInput,
+    username: string,
+  ) {
+    const article = await this.prisma.article.findUnique({
+      where: { id },
+      include: { author: true },
+    });
+
+    if (!article) {
+      throw new NotFoundException('Article not found');
+    }
+
+    if (article.author.username !== username) {
+      throw new UnauthorizedException(
+        'You do not have permission to update this article',
+      );
+    }
+
     return this.prisma.article.update({
       data: { ...updateArticleInput },
       where: { id },
     });
   }
 
-  async remove(id: number) {
+  async remove(id: number, username: string) {
+    const article = await this.prisma.article.findUnique({
+      where: { id },
+      include: { author: true },
+    });
+
+    if (!article) {
+      throw new NotFoundException('Article not found');
+    }
+
+    if (article.author.username !== username) {
+      throw new UnauthorizedException(
+        'You do not have permission to remove this article',
+      );
+    }
+
     await this.prisma.like.deleteMany({
       where: { articleId: id },
     });
