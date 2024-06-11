@@ -293,7 +293,13 @@ export type UpdateArticleMutationVariables = Exact<{
 
 export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle: { __typename?: 'Article', id: number, title?: string | null, content?: string | null } };
 
+export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUsersQuery = { __typename?: 'Query', users: Array<{ __typename?: 'User', id: number, username?: string | null } | null> };
+
 export type GetArticlesQueryVariables = Exact<{
+  filter?: InputMaybe<ArticleFilterInput>;
   sort: ArticleSortInput;
 }>;
 
@@ -616,9 +622,49 @@ export function useUpdateArticleMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateArticleMutationHookResult = ReturnType<typeof useUpdateArticleMutation>;
 export type UpdateArticleMutationResult = Apollo.MutationResult<UpdateArticleMutation>;
 export type UpdateArticleMutationOptions = Apollo.BaseMutationOptions<UpdateArticleMutation, UpdateArticleMutationVariables>;
+export const GetUsersDocument = gql`
+    query GetUsers {
+  users {
+    id
+    username
+  }
+}
+    `;
+
+/**
+ * __useGetUsersQuery__
+ *
+ * To run a query within a React component, call `useGetUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUsersQuery(baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+      }
+export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        }
+export function useGetUsersSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options);
+        }
+export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
+export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
+export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
+export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
 export const GetArticlesDocument = gql`
-    query GetArticles($sort: ArticleSortInput!) {
-  articles(sort: $sort) {
+    query GetArticles($filter: ArticleFilterInput, $sort: ArticleSortInput!) {
+  articles(filter: $filter, sort: $sort) {
     id
     title
     content
@@ -650,6 +696,7 @@ export const GetArticlesDocument = gql`
  * @example
  * const { data, loading, error } = useGetArticlesQuery({
  *   variables: {
+ *      filter: // value for 'filter'
  *      sort: // value for 'sort'
  *   },
  * });

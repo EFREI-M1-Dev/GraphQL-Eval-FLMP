@@ -1,5 +1,5 @@
-query GetArticles($sort: ArticleSortInput!) {
-  articles(sort: $sort) {
+query GetArticles($filter: ArticleFilterInput, $sort: ArticleSortInput!) {
+  articles(filter: $filter, sort: $sort) {
     id
     title
     content

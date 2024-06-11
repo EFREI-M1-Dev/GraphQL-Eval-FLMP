@@ -21,6 +21,7 @@ import { useNavigate } from 'react-router-dom'
 export type filterProps = {
   'date-order': string
   'like-order': string
+  author?: number
 }
 
 const Home = () => {
@@ -31,6 +32,7 @@ const Home = () => {
   const [filter, setFilter] = useState<filterProps>({
     'date-order': 'Desc',
     'like-order': 'Asc',
+    author: undefined,
   })
 
   const mapSortOrder = (order: string) => {
@@ -42,6 +44,9 @@ const Home = () => {
 
   const { loading, data, refetch } = useGetArticlesQuery({
     variables: {
+      filter: {
+        authorId: parseInt(filter?.author?.toString() || '0'),
+      },
       sort: {
         createdAt: dateOrder,
         likes: likeOrder,

@@ -8,6 +8,7 @@ import InputSelect from '../../../components/molecules/InputSelect'
 
 /* types */
 import { filterProps } from '..'
+import { User, useGetUsersQuery } from '../../../generated/graphql'
 
 type FilterProps = {
   isModalOpen: boolean
@@ -22,6 +23,8 @@ const Filter = ({
   filter,
   handleChangeOrder,
 }: FilterProps) => {
+  const { data } = useGetUsersQuery({})
+
   return (
     <AnimatePresence>
       {isModalOpen && (
@@ -35,6 +38,12 @@ const Filter = ({
             label="Likes"
             value={filter['like-order']}
             onChange={handleChangeOrder}
+          />
+          <InputSelect
+            label="Author"
+            value={filter['author'] || ''}
+            onChange={handleChangeOrder}
+            options={(data?.users as User[]) ?? []}
           />
         </Modal>
       )}
