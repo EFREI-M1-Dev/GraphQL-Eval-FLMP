@@ -48,6 +48,10 @@ const Register = () => {
     if (error) {
       console.error('Error:', error)
       setMsgError('An error occured')
+
+      if (error.message === 'User already exists') {
+        setMsgError('Username already exists !')
+      }
     }
   }, [data, loading, error])
 
