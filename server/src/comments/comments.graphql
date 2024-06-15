@@ -23,6 +23,6 @@ type Query {
 
 type Mutation {
   createComment(createCommentInput: CreateCommentInput!): Comment!
-  updateComment(updateCommentInput: UpdateArticleInput!): Comment!
+  updateComment(updateCommentInput: UpdateCommentInput!): Comment!
   removeComment(id: Int!): Comment
 }

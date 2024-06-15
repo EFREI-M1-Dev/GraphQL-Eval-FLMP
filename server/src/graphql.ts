@@ -88,7 +88,7 @@ export interface IMutation {
     login(loginUserInput: LoginUserInput): LoginResponse | Promise<LoginResponse>;
     signup(loginUserInput: LoginUserInput): User | Promise<User>;
     createComment(createCommentInput: CreateCommentInput): Comment | Promise<Comment>;
-    updateComment(updateCommentInput: UpdateArticleInput): Comment | Promise<Comment>;
+    updateComment(updateCommentInput: UpdateCommentInput): Comment | Promise<Comment>;
     removeComment(id: number): Nullable<Comment> | Promise<Nullable<Comment>>;
     createLike(articleId: number): Like | Promise<Like>;
     removeLike(articleId: number): Nullable<Like> | Promise<Nullable<Like>>;

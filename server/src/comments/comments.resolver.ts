@@ -32,7 +32,7 @@ export class CommentsResolver {
   @Mutation('createComment')
   @UseGuards(JwtAuthGuard)
   create(
-    @Args('CreateCommentInput') createCommentInput: CreateCommentInput,
+    @Args('createCommentInput') createCommentInput: CreateCommentInput,
     @Context() context: GraphQLContext,
   ) {
     return this.commentsService.create(
@@ -54,7 +54,7 @@ export class CommentsResolver {
   @Mutation('updateComment')
   @UseGuards(JwtAuthGuard)
   update(
-    @Args('UpdateCommentInput') updateCommentInput: UpdateCommentInput,
+    @Args('updateCommentInput') updateCommentInput: UpdateCommentInput,
     @Context() context: GraphQLContext,
   ) {
     return this.commentsService.update(
