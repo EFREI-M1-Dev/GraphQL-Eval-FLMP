@@ -24,6 +24,7 @@ import {
 /* hooks */
 import {decodedToken} from '../../hooks/decodedToken.tsx'
 import {useNotification} from '../../providers/NotificationProvider/index.tsx'
+import { Footer } from '../../components/organisms/Footer/index.tsx'
 
 interface CommentEdit {
 	edit: boolean
@@ -355,6 +356,7 @@ const ArticlePage = () => {
 						</div>
 					</div>
 				</div>
+				<Footer />
 			</div>
 	)
 }

@@ -12,7 +12,6 @@ import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import { useAppSelector } from './hooks/reduxHooks.tsx'
 import { NotificationProvider } from './providers/NotificationProvider/index.tsx'
-import {Footer} from "./components/organisms/Footer";
 
 function App() {
   const httpLink = createHttpLink({
@@ -57,7 +56,6 @@ function App() {
     <ApolloProvider client={client}>
       <NotificationProvider>
         <RouterProvider router={router} />
-        <Footer />
       </NotificationProvider>
     </ApolloProvider>
   )

@@ -17,6 +17,7 @@ import {
   useGetArticlesQuery,
 } from '../../generated/graphql'
 import { useNavigate } from 'react-router-dom'
+import { Footer } from '../../components/organisms/Footer'
 
 export type filterProps = {
   'date-order': string
@@ -123,6 +124,7 @@ const Home = () => {
           })}
         </GridArticleCards>
       </div>
+      <Footer />
     </div>
   )
 }
