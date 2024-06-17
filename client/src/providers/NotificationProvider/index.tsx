@@ -3,7 +3,7 @@ import styles from './styles.module.scss'
 import { AnimatePresence, motion } from 'framer-motion'
 
 interface NotificationContextType {
-  showNotification: (message: string) => void
+   showNotification: (message: string) => void
 }
 
 const NotificationContext = createContext<NotificationContextType | undefined>(

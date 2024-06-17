@@ -159,6 +159,7 @@
     padding: 1rem;
     border-radius: 5px;
     background: #f9f9f9;
+    position: relative;
 
     img {
       width: 50px;
@@ -168,6 +169,7 @@
 
     div {
       flex: 1;
+
       & > p:first-child {
         font-size: 1rem;
         font-weight: 500;
@@ -189,6 +191,10 @@
 
   }
 
+  &__edit{
+    background-color: #e5e5e5;
+  }
+
   &__none {
     font-family: $lora;
     font-size: 1rem;
@@ -197,4 +203,59 @@
     color: $gray;
     margin-top: 1rem;
   }
+
+  &__area {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba($gray, 0.4);
+
+    &__input {
+      textarea {
+        border: 1px solid $black;
+        width: 100%;
+        font-family: $roboto;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        min-height: 100px;
+
+        &:focus {
+          outline: 1px solid $yellow;
+        }
+      }
+    }
+  }
+
+  &__action {
+    position: absolute;
+    right: -36px;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    bottom: 0;
+    width: 32pxs;
+    margin-top: auto;
+    margin-bottom: auto;
+    gap: .4rem;
+
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      font-family: $roboto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+
+      &:hover {
+        color: $black;
+      }
+    }
+
+  }
+
+
 }

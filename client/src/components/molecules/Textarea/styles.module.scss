@@ -1,3 +1,5 @@
+@import "../../../assets/styles/variables";
+
 .textarea {
   position: relative;
 
@@ -15,5 +17,11 @@
     &:focus-visible {
       outline: none;
     }
+  }
+
+
+  &__outline{
+    border: 1px solid $black;
+    min-height: 100px;
   }
 }

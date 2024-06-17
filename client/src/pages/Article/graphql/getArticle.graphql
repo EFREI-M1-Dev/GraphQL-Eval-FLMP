@@ -10,9 +10,11 @@ query GetArticle($id: Int!) {
       avatar
     }
     comments {
+      id
       text
       createdAt
       author {
+        id
         avatar
         username
       }
