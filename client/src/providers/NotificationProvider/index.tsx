@@ -43,7 +43,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
       <AnimatePresence>
         {message && (
           <motion.div
-            initial={{ translateY: -40 }}
+            initial={{ translateY: -40, translateX: '-50%' }}
             animate={{ translateY: 0 }}
             exit={{ translateY: -50 }}
             className={styles.notification}
