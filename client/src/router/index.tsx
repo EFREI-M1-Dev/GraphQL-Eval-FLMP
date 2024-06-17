@@ -20,10 +20,6 @@ const router = createBrowserRouter([
     element: <Article />,
   },
   {
-    path: '/about',
-    element: <div>About</div>,
-  },
-  {
     path: '/new-story',
     element: (
       <RedirectIfLogged>
