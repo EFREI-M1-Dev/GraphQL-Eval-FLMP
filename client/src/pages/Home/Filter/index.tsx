@@ -31,16 +31,19 @@ const Filter = ({
         <Modal className={styles.filter} closeModal={closeModal}>
           <InputSelect
             label="Date"
+            name="date-order"
             value={filter['date-order']}
             onChange={handleChangeOrder}
           />
           <InputSelect
             label="Likes"
+            name="like-order"
             value={filter['like-order']}
             onChange={handleChangeOrder}
           />
           <InputSelect
             label="Author"
+            name="author"
             value={filter['author'] || ''}
             onChange={handleChangeOrder}
             options={(data?.users as User[]) ?? []}

@@ -75,6 +75,7 @@ const Home = () => {
 
   const handleChangeOrder = (event: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = event.target
+    console.log(name, value)
     setFilter({
       ...filter,
       [name]: value,
