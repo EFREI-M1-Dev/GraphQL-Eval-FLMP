@@ -78,7 +78,7 @@ const Register = () => {
                 type="password"
                 id="password"
                 name="password"
-                placeholder="Mot de passe"
+                placeholder="Password"
               />
             </div>
             {msgError && (
