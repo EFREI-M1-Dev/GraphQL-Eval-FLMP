@@ -20,20 +20,11 @@ Pour installer et lancer le projet, suivez ces étapes :
 
 1. Clonez le dépôt du projet :
 ```bash
-  git clone https://github.com/votre-utilisateur/voyant.git
-  cd voyant
+  git clone https://github.com/EFREI-M1-Dev/GraphQL-Eval-FLMP.git
+  cd GraphQL-Eval-FLMP
 ```
 
-2. Installez les dépendances pour le serveur et le client :
-```bash
-  cd server
-  npm ci
-  cd ../client
-  npm ci
-  cd ..
-```
-
-3. Lancez les services Docker :
+2. Lancez les services Docker :
 ```bash
   docker compose up -d
 ```
