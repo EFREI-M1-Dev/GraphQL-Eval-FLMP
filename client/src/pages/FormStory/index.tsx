@@ -4,6 +4,7 @@ import styles from './styles.module.scss'
 
 /* components */
 import Navbar from '../../components/organisms/Navbar'
+import Textarea from '../../components/molecules/Textarea'
 
 /* graphql */
 import {
@@ -12,7 +13,6 @@ import {
   useUpdateArticleMutation,
 } from '../../generated/graphql'
 import { useCreateArticleMutation } from '../../generated/graphql'
-import Textarea from '../../components/molecules/Textarea'
 
 /* provider */
 import { useNotification } from '../../providers/NotificationProvider'

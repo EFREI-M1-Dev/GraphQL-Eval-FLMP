@@ -12,7 +12,7 @@ const Register = () => {
   const [signup, { data, loading, error }] = useRegisterMutation()
   const usernameRef = useRef<HTMLInputElement>(null)
   const passwdRef = useRef<HTMLInputElement>(null)
-  const [msgError, setMsgError] = useState('')
+  const [msgError, setMsgError] = useState<string>('')
   const navigate = useNavigate()
 
   const handleSubmit = async (event: FormEvent) => {
@@ -32,7 +32,7 @@ const Register = () => {
       if (data?.signup.username) {
         navigate('/login')
       } else {
-        setMsgError("An error occured, please try again later")
+        setMsgError('An error occured, please try again later')
       }
     } catch (e) {
       console.error(e)
