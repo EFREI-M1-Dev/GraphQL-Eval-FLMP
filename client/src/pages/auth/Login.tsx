@@ -29,7 +29,6 @@ const Login = () => {
         variables: { input: { username, password } },
       })
       if (data?.login.token) {
-        console.log(data)
         dispatch(setLoggedUser(data.login))
         navigate('/')
       }

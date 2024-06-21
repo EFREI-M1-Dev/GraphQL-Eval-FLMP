@@ -30,7 +30,6 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({
   const [message, setMessage] = useState<string | null>(null)
 
   const showNotification = (message: string) => {
-    console.log(message)
     setMessage(message)
     setTimeout(() => {
       setMessage(null)

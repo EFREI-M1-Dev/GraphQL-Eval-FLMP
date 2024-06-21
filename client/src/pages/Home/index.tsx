@@ -64,7 +64,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    refetch().then((r) => console.log(r))
+    refetch()
   }, [])
 
   useEffect(() => {
