@@ -102,37 +102,42 @@ const ArticlePage = () => {
     }
   }, [getUserLiked.loading, getUserLiked.data])
 
-  const handleClickStateLike = async () => {
-    if (userHasLikedArticle) {
-      try {
-        const { data } = await deleteLike({
-          variables: { id: parseInt(id || '') },
-        })
-        if (data?.removeLike) {
-          showNotification('The like has been removed.')
-          getLikesNbr.refetch()
-          getUserLiked.refetch()
-        }
-      } catch (err) {
-        showNotification('We encountered a server error: ' + err)
-        console.error('Error liked article:', err)
-      }
-    } else {
-      try {
-        const { data } = await createLike({
-          variables: { id: parseInt(id || '') },
-        })
-        if (data?.createLike) {
-          showNotification('The like has been added.')
-          getLikesNbr.refetch()
-          getUserLiked.refetch()
-        }
-      } catch (err) {
-        showNotification('We encountered a server error: ' + err)
-        console.error('Error liked article:', err)
-      }
-    }
-  }
+	const handleClickStateLike = async () => {
+		if(idUserConnected !== null) {
+			if (userHasLikedArticle) {
+				try {
+					const {data} = await deleteLike({
+						variables: {id: parseInt(id || '')},
+					})
+					if (data?.removeLike) {
+						showNotification('The like has been removed.')
+						getLikesNbr.refetch()
+						getUserLiked.refetch()
+					}
+				} catch (err) {
+					showNotification('We encountered a server error: ' + err)
+					console.error('Error liked article:', err)
+				}
+			} else {
+				try {
+					const {data} = await createLike({
+						variables: {id: parseInt(id || '')},
+					})
+					if (data?.createLike) {
+						showNotification('The like has been added.')
+						getLikesNbr.refetch()
+						getUserLiked.refetch()
+					}
+				} catch (err) {
+					showNotification('We encountered a server error: ' + err)
+					console.error('Error liked article:', err)
+				}
+			}
+		}else{
+			showNotification('You need to be logged in to like an article.')
+		
+		}
+	}
 
   const handleDeleteArticle = async () => {
     try {
@@ -155,30 +160,34 @@ const ArticlePage = () => {
 
   const listComments = article?.comments
 
-  const handleCommentSubmit = async () => {
-    if (!commentValue) {
-      showNotification('Your comment cannot be empty.')
-      return
-    }
-    try {
-      const { data } = await createComment({
-        variables: {
-          createCommentInput: {
-            articleId: parseInt(id || ''),
-            text: commentValue,
-          },
-        },
-      })
-      if (data?.createComment) {
-        showNotification('Your comment has been added.')
-        setCommentValue('')
-        refetch()
-      }
-    } catch (err) {
-      showNotification('We encountered a server error: ' + err)
-      console.error('Error comment article:', err)
-    }
-  }
+	const handleCommentSubmit = async () => {
+		if(idUserConnected !== null	){
+			if (!commentValue) {
+				showNotification('Your comment cannot be empty.')
+				return
+			}
+			try {
+				const {data} = await createComment({
+					variables: {
+						createCommentInput: {
+							articleId: parseInt(id || ''),
+							text: commentValue
+						}
+					}
+				})
+				if (data?.createComment) {
+					showNotification('Your comment has been added.')
+					setCommentValue('')
+					refetch()
+				}
+			} catch (err) {
+				showNotification('We encountered a server error: ' + err)
+				console.error('Error comment article:', err)
+			}
+		}else{
+			showNotification('You need to be logged in to comment an article.')
+		}
+	}
 
   const handleEditComment = (commentId: number) => {
     setCommentValue(
