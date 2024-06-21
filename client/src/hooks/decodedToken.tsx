@@ -2,7 +2,7 @@ import { useAppSelector } from './reduxHooks.tsx';
 
 export const decodedToken = () => {
   const token = useAppSelector((state) => state.user.token);
-  if (token == null) {
+  if (token === '') {
     return null;
   }
 
