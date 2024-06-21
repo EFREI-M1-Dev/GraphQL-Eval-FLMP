@@ -9,8 +9,8 @@ type User {
 }
 
 input CreateUserInput {
-  username: String
-  password: String
+  username: String!
+  password: String!
 }
 
 type Query {

@@ -10,6 +10,9 @@ $ npm ci
 
 ```bash
 $ npx prisma migrate dev
+
+# reset your DB and seeding
+$ npx prisma migrate reset
 ```
 
 ## Running the app

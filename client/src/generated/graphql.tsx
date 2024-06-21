@@ -15,7 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  Timestamp: { input: any; output: any; }
+  Timestamp: { input: Date; output: Date; }
 };
 
 export type Article = {
@@ -62,8 +62,8 @@ export type CreateCommentInput = {
 };
 
 export type CreateUserInput = {
-  password?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 export type Like = {
@@ -270,7 +270,7 @@ export type GetArticleQueryVariables = Exact<{
 }>;
 
 
-export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', id: number, text: string, createdAt?: any | null, author: { __typename?: 'User', id: number, avatar?: string | null, username?: string | null } }> | null } | null };
+export type GetArticleQuery = { __typename?: 'Query', article?: { __typename?: 'Article', title?: string | null, content?: string | null, image?: string | null, createdAt?: Date | null, author?: { __typename?: 'User', id: number, username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', id: number, text: string, createdAt?: Date | null, author: { __typename?: 'User', id: number, avatar?: string | null, username?: string | null } }> | null } | null };
 
 export type GetHasUserLikedArticleQueryVariables = Exact<{
   id: Scalars['Int']['input'];
@@ -325,7 +325,7 @@ export type GetArticlesQueryVariables = Exact<{
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: any | null, likes?: Array<{ __typename?: 'Like', id: number }> | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', id: number }> | null } | null> };
+export type GetArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', id: number, title?: string | null, content?: string | null, image?: string | null, createdAt?: Date | null, likes?: Array<{ __typename?: 'Like', id: number }> | null, author?: { __typename?: 'User', username?: string | null, avatar?: string | null } | null, comments?: Array<{ __typename?: 'Comment', id: number }> | null } | null> };
 
 export type LoginMutationVariables = Exact<{
   input: LoginUserInput;

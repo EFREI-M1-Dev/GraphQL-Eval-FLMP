@@ -17,9 +17,6 @@ import { CommentsModule } from './comments/comments.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
-      definitions: {
-        path: join(process.cwd(), 'src/graphql.ts'),
-      },
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'static'),

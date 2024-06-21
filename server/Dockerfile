@@ -7,6 +7,7 @@ RUN npm ci
 
 COPY . .
 
+RUN npx prisma migrate dev
 RUN npx prisma migrate reset --force
 
 EXPOSE 3000

@@ -1,4 +1,4 @@
 export class CreateCommentInput {
-  articleId: number;
-  text: string;
+  articleId!: number;
+  text!: string;
 }

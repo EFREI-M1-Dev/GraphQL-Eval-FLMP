@@ -4,6 +4,6 @@ enum SortOrder {
 }
 
 export class ArticleSortInput {
-  readonly likes: SortOrder;
-  readonly createdAt: SortOrder;
+  readonly likes!: SortOrder;
+  readonly createdAt!: SortOrder;
 }

@@ -1,4 +1,4 @@
-# Voyant
+# Voyant (Projet GraphQL)
 
 Voyant est une version alternative au blog Medium, offrant une plateforme de publication et de lecture d'articles de blog.
 
@@ -29,10 +29,12 @@ Pour installer et lancer le projet, suivez ces étapes :
   docker compose up -d
 ```
 
+> Ou vous pouvez aussi installer le projet sans Docker en suivant le README pour le [server](https://github.com/EFREI-M1-Dev/GraphQL-Eval-FLMP/blob/main/server/README.md) et le [client](https://github.com/EFREI-M1-Dev/GraphQL-Eval-FLMP/blob/main/client/README.md).
+
 ## Utilisation
 Des comptes sont déjà créés pour vous permettre de tester l'application. Utilisez les identifiants suivants pour vous connecter :
 
-- **Identifiants** : Alice, Bob, Diana ou Charlie
+- **Identifiants** : alice, bob, diana ou charlie
 - **Mot de passe** : password
 
 ## Auteurs
